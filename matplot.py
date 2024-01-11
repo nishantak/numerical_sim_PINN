@@ -1,20 +1,26 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
-# Read simulation data from the file
+# Read simulation data from output dump file
 data = np.loadtxt('simulation_data.txt')
 
+#Read environment variables set by C++ code
+xmin = float(os.getenv("xmin"))
+xmax = float(os.getenv("xmax"))
+Nx = int(os.getenv("Nx"))
+
 # Plotting
-x_values = np.linspace(0, 2.0, 200)
+x_values = np.linspace(xmin, xmax, Nx)
 time_steps = len(data)
 plt.xlabel('x')
 plt.ylabel('u(x)')
 
 for t in range(time_steps):
     plt.clf()
-    plt.title(f'FVM KdV Simulation at Time Step {t}')
+    plt.title(f'FVM Simulation after Time Step {t-1}')
     plt.plot(x_values, data[t, :])
     plt.draw()
-    plt.pause(0.1)  # Adjust the pause time as needed
+    plt.pause(0.1)
 
 plt.show()
