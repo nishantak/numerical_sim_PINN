@@ -119,7 +119,7 @@ void write_data(string filename, vector<double> u){
 
 /// @brief Print Simulation Parameters
 void get_param(){
-    cout << "Number of Spatial Points (Nx): " << Nx << endl;
+    cout << endl << "Number of Spatial Points (Nx): " << Nx << endl;
     cout << "Domain Limits (xmin, xmax): " << xmin << ", " << xmax << endl;
     cout << "Domain Length (L): " << L << endl;
     cout << "Cell Width (dx): " << dx << endl << endl;
