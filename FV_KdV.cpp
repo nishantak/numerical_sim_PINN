@@ -2,7 +2,6 @@
 using namespace std;
 
 //Function Signatures
-void intialise(vector<double>&);
 void simulate(vector<double>&);
 void get_param();
 void plot();
@@ -34,13 +33,13 @@ double flux(double u){
 };
 
 
-// Numerical Flux Scheme (Lax-Friedrich)
+// Returns Numerical Flux, Numerical Flux Scheme (Lax-Friedrich)
 double num_flux(double u, double u_next){
     return ( (0.5 * (flux(u) + flux(u_next))) - (0.5 / (dt/dx) * (u_next - u)) );
 }
 
 
-/// @brief intial condition, U_0(x) = cos(pi*x)
+/// @brief initialise with intial condition, U_0(x) = cos(pi*x)
 void intialise(vector<double> &u){
     for(int j=0; j<Nx; j++)
         u[j] = cos(M_PI*(xmin + j*dx));
