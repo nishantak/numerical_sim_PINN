@@ -40,6 +40,13 @@ double num_flux(double u, double u_next){
 }
 
 
+/// @brief intial condition, U_0(x) = cos(pi*x)
+void intialise(vector<double> &u){
+    for(int j=0; j<Nx; j++)
+        u[j] = cos(M_PI*(xmin + j*dx));
+}
+
+
 //Driver Code 
 int main(){
     intialise(U);
@@ -52,13 +59,6 @@ int main(){
     plot();
 
     return 0;
-}
-
-
-/// @brief initialsies with intial condition
-void intialise(vector<double> &u){
-    for(int j=0; j<Nx; j++)
-        u[j] = cos(M_PI*(xmin + j*dx));
 }
 
 
