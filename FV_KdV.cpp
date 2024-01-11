@@ -26,7 +26,6 @@ int Nt = (int)(Tf/dt);  // No. of time steps
 
 
 vector<double> U(Nx, 0); // U(x);
-vector<double> rhs(Nx, 0); // RHS of PDE
 
 
 // Returns Flux, u^2 / 2
