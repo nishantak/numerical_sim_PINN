@@ -17,7 +17,7 @@ double xmin = 0.0, xmax = 2.0;  // Domain limits
 double L = abs(xmax- xmin);   // Domain Length
 double dx = L/(Nx-1);  // Cell width
 
-double cfl = 0.5; // Staility Parameter - CFL Number 
+double cfl = 0.5; // Stability Parameter - CFL Number 
 double c=1; // Wave Velocity
 
 double dt = cfl * dx / c;     // Time step
