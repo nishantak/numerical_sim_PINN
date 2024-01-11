@@ -6,7 +6,7 @@ void intialise(vector<double>&);
 void simulate(vector<double>&);
 void get_param();
 void plot();
-void write_data(string, vector<double>);
+void write_data(ofstream&, vector<double>);
 double calculate_tv(vector<double>&);
 // Function Signatures
 
@@ -65,12 +65,16 @@ void intialise(vector<double> &u){
 
 /// @brief Simulating the time stepping of PDE using Finite Volume Method and Flux Scheme
 void simulate(vector<double> &u){
+    // Output dump files
+    ofstream out_file("simulation_data.txt");
+    ofstream fin_file("U_final.txt");
 
     double t=0; //Current Time
+    
+    write_data(out_file, U); // Write initial data, Time Step 0
+
     while(t<=Tf){
-        write_data("simulation.txt", U); // Write initial data, Time Step 0
-        
-        for(int j=1; j<=Nx-2; j++){
+        for(int j=3; j<=Nx-2; j++){
             
             double third_derivative = (u[j] - 3.0*u[j-1] + 3.0*u[j-2] - u[j-3]) / (dx*dx*dx); 
 
@@ -80,13 +84,16 @@ void simulate(vector<double> &u){
         
         // Boundary Conditions
         u[0] = u[1]; // Left Boundary
+        u[1] = ;  u[2] = ; // To be implemented 
         u[Nx-1] = u[Nx-2]; // Right Boundary
 
-        write_data("simulation.txt", U); // Write Simulation Data for THIS time step
+        write_data(out_file, U); // Write Simulation Data for THIS time step
 
         t+=dt;
 
-    } write_data("U_final.txt", U); // Write Simulation Data for FINAL time step
+    } write_data(fin_file, U); // Write Simulation Data for FINAL time step
+
+out_file.close(); fin_file.close();
 
 }
 
@@ -109,11 +116,10 @@ double calculate_tv(vector<double>& u) {
 
 
 /// @brief write data to file
-void write_data(string filename, vector<double> u){
-    ofstream out_file(filename);
+void write_data(ofstream& filename, vector<double> u){
     for(int i=0; i<Nx; i++)
-        out_file << u[i] << " ";
-    out_file << endl;
+        filename << u[i] << " ";
+    filename << endl;
 }
 
 
