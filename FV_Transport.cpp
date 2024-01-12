@@ -11,7 +11,8 @@ long double calculate_tv(vector<long double>&);
 
 
 // Simulation Parameters
-int Nx = 401;      // Number of points
+int ghost_cells = 4;  // Number of ghost cells 
+int Nx = 200; Nx += ghost_cells;   // Number of points
 double xmin = 0.0, xmax = 2*M_PI;  // Domain limits
 double L = abs(xmax- xmin);   // Domain Length
 long double dx = L/(Nx-1);  // Cell width
@@ -128,7 +129,7 @@ void write_data(ofstream& filename, vector<long double, int start> u){
 
 /// @brief Print Simulation Parameters
 void get_param(){
-    cout << endl << "Number of Spatial Points (Nx): " << Nx << endl;
+    cout << endl << "Number of Spatial Points (Nx): " << Nx - ghost_cells << endl;
     cout << "Domain Limits (xmin, xmax): " << xmin << ", " << xmax << endl;
     cout << "Domain Length (L): " << L << endl;
     cout << "Cell Width (dx): " << dx << endl << endl;
