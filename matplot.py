@@ -21,6 +21,6 @@ for t in range(time_steps):
     plt.title(f'FVM Simulation after Time Step {t-1}')
     plt.plot(x_values, data[t, :])
     plt.draw()
-    plt.pause(0.1)
+    plt.pause(0.05)
 
 plt.show()
