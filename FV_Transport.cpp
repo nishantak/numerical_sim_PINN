@@ -6,28 +6,30 @@ void simulate(vector<long double>&);
 void get_param();
 void plot();
 void write_data(ofstream&, vector<long double>, int, int);
-long double calculate_tv(vector<long double>&);
+long double calculate_tv(vector<long double>);
 // Function Signatures
 
 
 // Simulation Parameters
-int Nx = 500;   // Number of spatial points 
 int ghost_cells = 2; // Number of ghost cells 
+int Nx = 500 + ghost_cells;   // Number of spatial points 
 double xmin = 0, xmax = 2*M_PI;  // Domain limits
 double L = abs(xmax- xmin);   // Domain Length
 long double dx = L/(Nx-1);  // Cell width
 
 double cfl = 0.5; // Stability Parameter - CFL Number 
-double c=1; // Wave Velocity
+long double c=1; // Wave Velocity
 
 long double dt = cfl * dx / c;     // Time step
 double Tf = 2.0;         // Final time / Total Time
 int Nt = (int)(Tf/dt);  // No. of time steps
 
+int first_cell = 1, last_cell = Nx-2; // j domain Limits
+
 
 // Returns Flux, 2u
 long double flux(long double u){
-    return 0.5*u*u;
+    return 2*u;
 };
 
 
@@ -37,7 +39,7 @@ long double num_flux(long double u, long double u_next){
 }
 
 
-/// @brief initialise with intial condition, U_0(x) = sin(x)
+/// @brief initialise with intial condition, U_0(x_j) = sin(x_j+1/2)
 void intialise(vector<long double> &u){
     for(int j=0; j<Nx; j++)
         u[j] = sin((xmin + (j+0.5)*dx));
@@ -47,14 +49,13 @@ void intialise(vector<long double> &u){
 //Driver Code 
 int main(){
 
-    Nx += ghost_cells;
     vector<long double> U(Nx, 0); // U(x);
-    vector<long double> U_0(U.begin(), U.end()); // Copy of intial u_0 | For some reason
+    //vector<long double> U_0(U); // Copy of intial u_0, For some reason
+
+    get_param();
 
     intialise(U);
     simulate(U);
-
-    get_param();
 
     cout << "Total Variation: " << calculate_tv(U) << endl;
     
@@ -70,18 +71,17 @@ void simulate(vector<long double> &u_n){
     // Output dump files
     ofstream out_file("simulation_data.txt");
     ofstream fin_file("U_final.txt");
-    ofstream debug_file("all_data.txt");
+    //ofstream debug_file("all_data.txt");
 
-    int first_cell = 1, last_cell = Nx-2; // Spatial domain Limits (Discretized)
     double t=0; //Current Time
     
     write_data(out_file, u_n, first_cell, last_cell); // Write initial data
-    write_data(debug_file, u_n, 0, Nx-1);
+    //write_data(debug_file, u_n, 0, Nx-1);
     
     // Time Stepping Loop
-    while(t<=Tf){
+    while(t<Tf){
         
-        vector<long double> u_n_plus1(u_n.begin(), u_n.end()); // Next Time Step
+        vector<long double> u_n_plus1(u_n); // Next Time Step, U^n+1_j, initialised with U^n_j
 
         for(int j=first_cell; j<=last_cell; j++){
             
@@ -96,12 +96,12 @@ void simulate(vector<long double> &u_n){
         // Boundary conditions        
         u_n_plus1[Nx-1] = u_n_plus1[Nx-2]; // RIGHT Boundary
         u_n_plus1[0] = u_n_plus1[Nx-1]; // LEFT Boundary
-
-        for(int i=0; i<=Nx-1; i++)
-            u_n[i] = u_n_plus1[i]; // Store u^n+1_j in u^n_j for next time step
+        
+        // Store u^n+1_j in u^n_j for next time step
+        u_n = u_n_plus1; 
 
         write_data(out_file, u_n, first_cell, last_cell); // Write Simulation Data for THIS time step
-        write_data(debug_file, u_n, 0, Nx-1);
+        //write_data(debug_file, u_n, 0, Nx-1);
 
         t+=dt;
 
@@ -113,9 +113,9 @@ out_file.close(); fin_file.close();
 
 
 /// @brief Calculates the TV bound
-long double calculate_tv(vector<long double>& u) {
+long double calculate_tv(vector<long double> u) {
     double tv_norm = 0.0;
-    for (int j = 1; j < Nx; j++) {
+    for (int j = first_cell; j <= last_cell + 1; j++) {
         tv_norm += abs(u[j] - u[j - 1]);
     }
     

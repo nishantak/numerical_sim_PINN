@@ -2,56 +2,60 @@
 using namespace std;
 
 //Function Signatures
-void simulate(vector<double>&);
+void simulate(vector<long double>&);
 void get_param();
 void plot();
-void write_data(ofstream&, vector<double>);
-double calculate_tv(vector<double>&);
+void write_data(ofstream&, vector<long double>, int, int);
+long double calculate_tv(vector<long double>);
 // Function Signatures
 
 
 // Simulation Parameters
-int Nx = 201;      // Number of points
-double xmin = 0.0, xmax = 2.0;  // Domain limits
+int ghost_cells = 4; // Number of ghost cells 
+int Nx = 200 + ghost_cells;   // Number of spatial points 
+double xmin = 0, xmax = 2.00;  // Domain limits
 double L = abs(xmax- xmin);   // Domain Length
-double dx = L/(Nx-1);  // Cell width
+long double dx = L/(Nx-1);  // Cell width
 
-double cfl = 0.5; // Stability Parameter - CFL Number 
-double c=1; // Wave Velocity
+double cfl = 0.05; // Stability Parameter - CFL Number 
+long double c=1; // Wave Velocity
 
-double dt = cfl * dx / c;     // Time step
+long double dt = cfl * dx / c;     // Time step
 double Tf = 2.0;         // Final time / Total Time
 int Nt = (int)(Tf/dt);  // No. of time steps
 
-
-vector<double> U(Nx, 0); // U(x);
+int first_cell = 3, last_cell = Nx-2; // j domain Limits
 
 
 // Returns Flux, u^2 / 2
-double flux(double u){
+long double flux(long double u){
     return 0.5*u*u;
 };
 
 
 // Returns Numerical Flux, Numerical Flux Scheme (Lax-Friedrich)
-double num_flux(double u, double u_next){
-    return 0.5 * (flux(u) + flux(u_next)) - (0.5 / (dt/dx) * (u_next - u));
+long double num_flux(long double u, long double u_next){
+    return 0.5 * (flux(u) + flux(u_next)) - ((0.5 / (dt/dx)) * (u_next - u));
 }
 
 
-/// @brief initialise with intial condition, U_0(x) = cos(pi*x)
-void intialise(vector<double> &u){
+/// @brief initialise with intial condition, U_0(x_j) = sin(x_j+1/2)
+void intialise(vector<long double> &u){
     for(int j=0; j<Nx; j++)
-        u[j] = sin(M_PI*(xmin + j*dx));
+        u[j] = sin((xmin + (j+0.5)*dx));
 }
 
 
 //Driver Code 
 int main(){
-    intialise(U);
-    simulate(U);
+
+    vector<long double> U(Nx, 0); // U(x);
+    //vector<long double> U_0(U); // Copy of intial u_0, For some reason
 
     get_param();
+
+    intialise(U);
+    simulate(U);
 
     cout << "Total Variation: " << calculate_tv(U) << endl;
     
@@ -62,55 +66,60 @@ int main(){
 
 
 /// @brief Simulating the time stepping of PDE using Finite Volume Method and Flux Scheme
-void simulate(vector<double> &u){
+/// @param u_n This Current Time Step data
+void simulate(vector<long double> &u_n){
     // Output dump files
     ofstream out_file("simulation_data.txt");
     ofstream fin_file("U_final.txt");
+    //ofstream debug_file("all_data.txt");
 
     double t=0; //Current Time
     
-    write_data(out_file, U); // Write initial data, Time Step 0
+    write_data(out_file, u_n, first_cell, last_cell); // Write initial data
+    //write_data(debug_file, u_n, 0, Nx-1);
+    
     // Time Stepping Loop
-    while(t<=Tf){
-        for(int j=3; j<=Nx-2; j++){
-
-            // Numerical Flux
-            long double F_j_plus_half = num_flux(u[j], u[j+1]);
-            long double F_j_min_half = num_flux(u[j-1], u[j]);
-            
-            // U_xxx Discretization
-            long double third_derivative = (u[j] - 3.0*u[j-1] + 3.0*u[j-2] - u[j-3]) / (dx*dx*dx); 
-
-            // Update using Numerical Scheme
-            u[j] -= (dt/dx) * (F_j_plus_half - F_j_min_half) + dt * third_derivative ;
-        }
+    while(t<Tf){
         
-        // Boundary Conditions | Periodic Boundary Condition
-        u[0] = u[Nx-1] ; // Left Boundary
-        u[1] = u[0] ; u[2] = u[1];  
-        u[Nx-1] = u[Nx-2]; // Right Boundary
+        vector<long double> u_n_plus1(u_n); // Next Time Step, U^n+1_j, initialised with U^n_j
 
-        write_data(out_file, U); // Write Simulation Data for THIS time step
+        for(int j=first_cell; j<=last_cell; j++){
+            
+            // Numerical Flux
+            long double F_j_plus_half = num_flux(u_n[j], u_n[j+1]);
+            long double F_j_min_half = num_flux(u_n[j-1], u_n[j]);
+
+            /// U_xxx Discretization | (u^n_j - 3u^n_j-1 + 3u^n_j-2 - u^n_j-3) / dx^3
+            long double third_derivative = (u_n[j] - 3.0*u_n[j-1] + 3.0*u_n[j-2] - u_n[j-3]) / (dx*dx*dx);
+            
+            // Update using Numerical Scheme
+            u_n_plus1[j] -= (dt/dx) * (F_j_plus_half - F_j_min_half) + dt * third_derivative;
+        }
+
+        // Boundary conditions        
+        u_n_plus1[Nx-1] = u_n_plus1[Nx-2]; // RIGHT Boundary
+        u_n_plus1[0] = u_n_plus1[Nx-1]; // LEFT Boundary
+        u_n_plus1[1] = u_n_plus1[0]; u_n_plus1[2] = u_n_plus1[1]; // Cells -1, -2
+        
+        // Store u^n+1_j in u^n_j for next time step
+        u_n = u_n_plus1; 
+
+        write_data(out_file, u_n, first_cell, last_cell); // Write Simulation Data for THIS time step
+        //write_data(debug_file, u_n, 0, Nx-1);
 
         t+=dt;
 
-    } write_data(fin_file, U); // Write Simulation Data for FINAL time step
+    } write_data(fin_file, u_n, 1, Nx-2); // Write Simulation Data for FINAL time step
 
 out_file.close(); fin_file.close();
 
 }
 
 
-/// @brief Plots the graph using python matplotlib script
-void plot(){
-    system("python matplot.py");
-}
-
-
 /// @brief Calculates the TV bound
-double calculate_tv(vector<double>& u) {
+long double calculate_tv(vector<long double> u) {
     double tv_norm = 0.0;
-    for (int j = 1; j < Nx; j++) {
+    for (int j = first_cell; j <= last_cell + 1; j++) {
         tv_norm += abs(u[j] - u[j - 1]);
     }
     
@@ -118,9 +127,20 @@ double calculate_tv(vector<double>& u) {
 }
 
 
-/// @brief write data to file
-void write_data(ofstream& filename, vector<double> u){
-    for(int i=0; i<Nx; i++)
+/// @brief Pass plot data to python matplotlib script and plots graph
+void plot(){
+    // Set environment variables to pass to python script
+    setenv("xmin", to_string(xmin).c_str(), 1);
+    setenv("xmax", to_string(xmax).c_str(), 1);
+    setenv("Nx", to_string(Nx - ghost_cells).c_str(), 1);
+    // CLI command to run python script
+    system("python matplot.py");
+}
+
+
+/// @brief write data to file using file stream
+void write_data(ofstream& filename, vector<long double> u, int start, int end){
+    for(int i=start; i<=end; i++)
         filename << u[i] << " ";
     filename << endl;
 }
@@ -128,7 +148,7 @@ void write_data(ofstream& filename, vector<double> u){
 
 /// @brief Print Simulation Parameters
 void get_param(){
-    cout << endl << "Number of Spatial Points (Nx): " << Nx << endl;
+    cout << endl << "Number of Spatial Points (Nx): " << Nx - ghost_cells << endl;
     cout << "Domain Limits (xmin, xmax): " << xmin << ", " << xmax << endl;
     cout << "Domain Length (L): " << L << endl;
     cout << "Cell Width (dx): " << dx << endl << endl;

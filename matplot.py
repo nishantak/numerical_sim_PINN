@@ -18,7 +18,7 @@ plt.ylabel('U(x)')
 
 for t in range(time_steps):
     plt.clf()
-    plt.title(f'FVM Simulation after Time Step {t-1}')
+    plt.title(f'FVM Simulation after Time Step {t}')
     plt.plot(x_values, data[t, :])
     plt.draw()
     plt.pause(0.05)
