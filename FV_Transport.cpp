@@ -11,8 +11,7 @@ long double calculate_tv(vector<long double>&);
 
 
 // Simulation Parameters
-int ghost_cells = 4;  // Number of ghost cells 
-int Nx = 200; Nx += ghost_cells;   // Number of points
+int Nx = 204;   // Number of points | Number of ghost cells = 4
 double xmin = 0.0, xmax = 2*M_PI;  // Domain limits
 double L = abs(xmax- xmin);   // Domain Length
 long double dx = L/(Nx-1);  // Cell width
@@ -83,6 +82,7 @@ void simulate(vector<long double> &u){
             u[j] -= (dt/dx) * (F_j_plus_half - F_j_min_half);
         }
         
+        // Boundary conditions
         u[Nx - 1] = u[Nx-2]; // Right Boundary
         u[0] = u[Nx - 1]; // Left Boundary
 
@@ -120,7 +120,7 @@ long double calculate_tv(vector<long double>& u) {
 
 
 /// @brief write data to file using file stream
-void write_data(ofstream& filename, vector<long double, int start> u){
+void write_data(ofstream& filename, vector<long double> u, int start){
     for(int i=start; i<Nx-1; i++)
         filename << u[i] << " ";
     filename << endl;
@@ -129,7 +129,7 @@ void write_data(ofstream& filename, vector<long double, int start> u){
 
 /// @brief Print Simulation Parameters
 void get_param(){
-    cout << endl << "Number of Spatial Points (Nx): " << Nx - ghost_cells << endl;
+    cout << endl << "Number of Spatial Points (Nx): " << Nx << endl;
     cout << "Domain Limits (xmin, xmax): " << xmin << ", " << xmax << endl;
     cout << "Domain Length (L): " << L << endl;
     cout << "Cell Width (dx): " << dx << endl << endl;
