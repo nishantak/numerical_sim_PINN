@@ -5,7 +5,7 @@ using namespace std;
 void simulate(vector<long double>&);
 void get_param();
 void plot();
-void write_data(ofstream&, vector<long double>);
+void write_data(ofstream&, vector<long double>, int);
 long double calculate_tv(vector<long double>&);
 // Function Signatures
 
@@ -69,7 +69,7 @@ void simulate(vector<long double> &u){
 
     double t=0; //Current Time
     
-    write_data(out_file, u); // Write initial data
+    write_data(out_file, u, 1); // Write initial data
     // Time Stepping Loop
     while(t<=Tf){
         for(int j=1; j<=Nx-2; j++){
@@ -85,11 +85,11 @@ void simulate(vector<long double> &u){
         u[Nx - 1] = u[Nx-2]; // Right Boundary
         u[0] = u[Nx - 1]; // Left Boundary
 
-        write_data(out_file, u); // Write Simulation Data for THIS time step
+        write_data(out_file, u, 1); // Write Simulation Data for THIS time step
 
         t+=dt;
 
-    } write_data(fin_file, u); // Write Simulation Data for FINAL time step
+    } write_data(fin_file, u, 1); // Write Simulation Data for FINAL time step
 
 out_file.close(); fin_file.close();
 
@@ -119,8 +119,8 @@ long double calculate_tv(vector<long double>& u) {
 
 
 /// @brief write data to file using file stream
-void write_data(ofstream& filename, vector<long double> u){
-    for(int i=0; i<Nx; i++)
+void write_data(ofstream& filename, vector<long double, int start> u){
+    for(int i=start; i<Nx-1; i++)
         filename << u[i] << " ";
     filename << endl;
 }
