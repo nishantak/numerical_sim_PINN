@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-//Function Signatures
+// Function Signatures
 void simulate(vector<long double>&);
 void get_param();
 void plot();
@@ -11,25 +11,25 @@ long double calculate_tv(vector<long double>);
 
 
 // Simulation Parameters
-int ghost_cells = 2; // Number of ghost cells 
+int ghost_cells = 2;    // Number of ghost cells 
 int Nx = 500 + ghost_cells;   // Number of spatial points 
 double xmin = 0, xmax = 2*M_PI;  // Domain limits
 double L = abs(xmax- xmin);   // Domain Length
 long double dx = L/(Nx-1);  // Cell width
 
-double cfl = 0.5; // Stability Parameter - CFL Number 
-long double c=1; // Wave Velocity
+double cfl = 0.5;   // Stability Parameter - CFL Number 
+long double c=1;  // Wave Velocity
 
-long double dt = cfl * dx / c;     // Time step
+long double dt = cfl * dx / c;  // Time step
 double Tf = 2.0;         // Final time / Total Time
 int Nt = (int)(Tf/dt);  // No. of time steps
 
-int first_cell = 1, last_cell = Nx-2; // j domain Limits
+int first_cell = 1, last_cell = Nx-2;   // j domain Limits
 
 
-// Returns Flux, 2u
+// Returns Flux, u^2 / 2
 long double flux(long double u){
-    return 2*u;
+    return 0.5*u*u;
 };
 
 
@@ -41,6 +41,7 @@ long double num_flux(long double u, long double u_next){
 
 /// @brief initialise with intial condition, U_0(x_j) = sin(x_j+1/2)
 void intialise(vector<long double> &u){
+    cout << "Initial Condition: U_0(x_j) = sin(x_j+1/2)" << endl << endl;
     for(int j=0; j<Nx; j++)
         u[j] = sin((xmin + (j+0.5)*dx));
 }
