@@ -14,7 +14,7 @@ Nx = int(os.getenv("Nx"))
 x_values = np.linspace(xmin, xmax, Nx)
 time_steps = len(data)
 plt.xlabel('x')
-plt.ylabel('u(x)')
+plt.ylabel('U(x)')
 
 for t in range(time_steps):
     plt.clf()
