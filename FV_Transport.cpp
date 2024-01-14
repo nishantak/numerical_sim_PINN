@@ -12,8 +12,8 @@ long double calculate_tv(vector<long double>);
 
 // Simulation Parameters
 int ghost_cells = 2;    // Number of ghost cells 
-int Nx = 500 + ghost_cells;   // Number of spatial points 
-double xmin = 0, xmax = 2*M_PI;  // Domain limits
+int Nx = 200 + ghost_cells;   // Number of spatial points 
+double xmin = -2, xmax = 2;  // Domain limits
 double L = abs(xmax- xmin);   // Domain Length
 long double dx = L/(Nx-1);  // Cell width
 
@@ -29,7 +29,7 @@ int first_cell = 1, last_cell = Nx-2;   // j domain Limits
 
 // Returns Flux, u^2 / 2
 long double flux(long double u){
-    return 0.5*u*u;
+    return 2*u;
 };
 
 
@@ -39,11 +39,12 @@ long double num_flux(long double u, long double u_next){
 }
 
 
-/// @brief initialise with intial condition, U_0(x_j) = sin(x_j+1/2)
+/// @brief initialise with intial condition
 void intialise(vector<long double> &u){
     cout << "Initial Condition: U_0(x_j) = sin(x_j+1/2)" << endl << endl;
     for(int j=0; j<Nx; j++)
-        u[j] = sin((xmin + (j+0.5)*dx));
+        u[j] = xmin + (j+0.5)*dx > 0 ? 0 : 1; // Discrete Initial data, x_i > 0 ? 0 : 1 
+        //u[j] = sin((xmin + (j+0.5)*dx)); // U_0(x_j) = sin(x_j+1/2)
 }
 
 

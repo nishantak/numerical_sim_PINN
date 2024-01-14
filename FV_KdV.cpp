@@ -12,16 +12,16 @@ long double calculate_tv(vector<long double>);
 
 // Simulation Parameters
 int ghost_cells = 4;    // Number of ghost cells 
-int Nx = 200 + ghost_cells;   // Number of spatial points 
-double xmin = 0, xmax = 2.00;  // Domain limits
+int Nx = 45 + ghost_cells;   // Number of spatial points 
+double xmin = 0, xmax = 40;  // Domain limits
 double L = abs(xmax- xmin);   // Domain Length
 long double dx = L/(Nx-1);  // Cell width
 
-double cfl = 0.05;  // Stability Parameter - CFL Number 
+double cfl = 0.001;  // Stability Parameter - CFL Number 
 long double c=1;  // Wave Velocity
 
 long double dt = cfl * dx / c;  // Time step
-double Tf = 2.0;         // Final time / Total Time
+double Tf = 5;         // Final time / Total Time
 int Nt = (int)(Tf/dt);  // No. of time steps
 
 int first_cell = 3, last_cell = Nx-2;   // j domain Limits
@@ -39,13 +39,14 @@ long double num_flux(long double u, long double u_next){
 }
 
 
-/// @brief initialise with intial condition, U_0(x_j) = sin(x_j+1/2)
+/// @brief initialise with intial condition
 void intialise(vector<long double> &u){
     cout << "Initial Condition: U_0(x_j) = sin(x_j+1/2)" << endl << endl;
     for(int j=0; j<Nx; j++)
-        u[j] = sin((xmin + (j+0.5)*dx));
+        //u[j] = xmin + (j+0.5)*dx > 0 ? 0 : 1; // Discrete Initial data, x_i > 0 ? 0 : 1 
+        //u[j] = sin((xmin + (j+0.5)*dx)); // U_0(x_j) = sin(x_j+1/2)
+        u[j] = 0.25 * (pow(1/cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx) - 7), 2));
 }
-
 
 //Driver Code 
 int main(){
@@ -97,10 +98,13 @@ void simulate(vector<long double> &u_n){
             u_n_plus1[j] -= (dt/dx) * (F_j_plus_half - F_j_min_half) + dt * third_derivative;
         }
 
-        // Boundary conditions        
-        u_n_plus1[Nx-1] = u_n_plus1[Nx-2]; // RIGHT Boundary
-        u_n_plus1[0] = u_n_plus1[Nx-1]; // LEFT Boundary
-        u_n_plus1[1] = u_n_plus1[0]; u_n_plus1[2] = u_n_plus1[1]; // Cells -1, -2
+        //Boundary conditions      
+        long double dU = u_n_plus1[4] - u_n_plus1[3];
+        for(int i=2; i<=0; i--)
+            u_n_plus1[i] = u_n_plus1[3] - i*dU; 
+        // u_n_plus1[Nx-1] = u_n_plus1[Nx-2]; // RIGHT Boundary
+        // u_n_plus1[0] = u_n_plus1[Nx-1]; // LEFT Boundary
+        // u_n_plus1[1] = u_n_plus1[0]; u_n_plus1[2] = u_n_plus1[1]; // Cells -1, -2
         
         // Store u^n+1_j in u^n_j for next time step
         u_n = u_n_plus1; 
