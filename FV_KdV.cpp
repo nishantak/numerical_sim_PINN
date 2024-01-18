@@ -12,12 +12,12 @@ long double calculate_tv(vector<long double>);
 
 // Simulation Parameters
 int ghost_cells = 4;    // Number of ghost cells 
-int Nx = 45 + ghost_cells;   // Number of spatial points 
-double xmin = 0, xmax = 40;  // Domain limits
-double L = abs(xmax- xmin);   // Domain Length
+int Nx = 200 + ghost_cells;   // Number of spatial points 
+double xmin = 0, xmax = 2*M_PI;  // Domain limits
+double L = abs(xmax- xmin);   //Domain Length
 long double dx = L/(Nx-1);  // Cell width
 
-double cfl = 0.001;  // Stability Parameter - CFL Number 
+double cfl = 0.5;  // Stability Parameter - CFL Number 
 long double c=1;  // Wave Velocity
 
 long double dt = cfl * dx / c;  // Time step
@@ -45,14 +45,15 @@ void intialise(vector<long double> &u){
     for(int j=0; j<Nx; j++)
         //u[j] = xmin + (j+0.5)*dx > 0 ? 0 : 1; // Discrete Initial data, x_i > 0 ? 0 : 1 
         //u[j] = sin((xmin + (j+0.5)*dx)); // U_0(x_j) = sin(x_j+1/2)
-        u[j] = 0.25 * (pow(1/cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx) - 7), 2));
+        u[j] = 0.25 * (pow(1/cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx) - 7), 2)); 
 }
 
 //Driver Code 
 int main(){
 
+    setprecision(8);
     vector<long double> U(Nx, 0); // U(x);
-    //vector<long double> U_0(U); // Copy of intial u_0, For some reason
+    //vector<long double> U_0(U); // Copy of intial u_0, For some reason?
 
     get_param();
 
@@ -68,23 +69,22 @@ int main(){
 
 
 /// @brief Simulating the time stepping of PDE using Finite Volume Method and Flux Scheme
-/// @param u_n This Current Time Step data
+/// @param u_n Current Time Step data U^n_j
 void simulate(vector<long double> &u_n){
     // Output dump files
     ofstream out_file("simulation_data.txt");
     ofstream fin_file("U_final.txt");
-    //ofstream debug_file("all_data.txt");
+    ofstream debug_file("all_data.txt");
 
     double t=0; //Current Time
     
     write_data(out_file, u_n, first_cell, last_cell); // Write initial data
-    //write_data(debug_file, u_n, 0, Nx-1);
+    write_data(debug_file, u_n, 0, Nx-1);
     
     // Time Stepping Loop
     while(t<Tf){
-        
-        vector<long double> u_n_plus1(u_n); // Next Time Step, U^n+1_j, initialised with U^n_j
 
+        vector<long double> u_n_plus1(u_n); // Next Time Step, U^n+1_j, initialised with U^n_j
         for(int j=first_cell; j<=last_cell; j++){
             
             // Numerical Flux
@@ -95,13 +95,15 @@ void simulate(vector<long double> &u_n){
             long double third_derivative = (u_n[j] - 3.0*u_n[j-1] + 3.0*u_n[j-2] - u_n[j-3]) / (dx*dx*dx);
             
             // Update using Numerical Scheme
-            u_n_plus1[j] -= (dt/dx) * (F_j_plus_half - F_j_min_half) + dt * third_derivative;
+           u_n_plus1[j] -= (dt/dx) * (F_j_plus_half - F_j_min_half) + dt*third_derivative;
+           //if (j==3)cout << endl << u_n[j] << endl << -3*u_n[j-1] << endl << 3*u_n[j-2] << endl<< -u_n[j-3] << endl << (u_n[j] - 3.0*u_n[j-1]+ 3.0*u_n[j-2] - 1*u_n[j-3]) <<endl; // To debug third derivative calcualtions
         }
 
         //Boundary conditions      
         long double dU = u_n_plus1[4] - u_n_plus1[3];
-        for(int i=2; i<=0; i--)
-            u_n_plus1[i] = u_n_plus1[3] - i*dU; 
+        for(int i=2; i>=0; i--)
+            u_n_plus1[i] = u_n_plus1[i+1] - dU; 
+        u_n_plus1[Nx-1] = u_n_plus1[Nx-2] + dU;
         // u_n_plus1[Nx-1] = u_n_plus1[Nx-2]; // RIGHT Boundary
         // u_n_plus1[0] = u_n_plus1[Nx-1]; // LEFT Boundary
         // u_n_plus1[1] = u_n_plus1[0]; u_n_plus1[2] = u_n_plus1[1]; // Cells -1, -2
@@ -110,7 +112,7 @@ void simulate(vector<long double> &u_n){
         u_n = u_n_plus1; 
 
         write_data(out_file, u_n, first_cell, last_cell); // Write Simulation Data for THIS time step
-        //write_data(debug_file, u_n, 0, Nx-1);
+        write_data(debug_file, u_n, 0, Nx-1);
 
         t+=dt;
 
@@ -145,6 +147,7 @@ void plot(){
 
 /// @brief write data to file using file stream
 void write_data(ofstream& filename, vector<long double> u, int start, int end){
+    filename.precision(8);
     for(int i=start; i<=end; i++)
         filename << u[i] << " ";
     filename << endl;

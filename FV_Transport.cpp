@@ -13,7 +13,7 @@ long double calculate_tv(vector<long double>);
 // Simulation Parameters
 int ghost_cells = 2;    // Number of ghost cells 
 int Nx = 200 + ghost_cells;   // Number of spatial points 
-double xmin = -2, xmax = 2;  // Domain limits
+double xmin = 0, xmax = 2*M_PI;  // Domain limits
 double L = abs(xmax- xmin);   // Domain Length
 long double dx = L/(Nx-1);  // Cell width
 
@@ -27,7 +27,7 @@ int Nt = (int)(Tf/dt);  // No. of time steps
 int first_cell = 1, last_cell = Nx-2;   // j domain Limits
 
 
-// Returns Flux, u^2 / 2
+// Returns Flux, 2u
 long double flux(long double u){
     return 2*u;
 };
@@ -43,8 +43,8 @@ long double num_flux(long double u, long double u_next){
 void intialise(vector<long double> &u){
     cout << "Initial Condition: U_0(x_j) = sin(x_j+1/2)" << endl << endl;
     for(int j=0; j<Nx; j++)
-        u[j] = xmin + (j+0.5)*dx > 0 ? 0 : 1; // Discrete Initial data, x_i > 0 ? 0 : 1 
-        //u[j] = sin((xmin + (j+0.5)*dx)); // U_0(x_j) = sin(x_j+1/2)
+        //u[j] = xmin + (j+0.5)*dx > 0 ? 0 : 1; // Discrete Initial data, x_i > 0 ? 0 : 1 
+        u[j] = sin((xmin + (j+0.5)*dx)); // U_0(x_j) = sin(x_j+1/2)
 }
 
 
@@ -52,7 +52,7 @@ void intialise(vector<long double> &u){
 int main(){
 
     vector<long double> U(Nx, 0); // U(x);
-    //vector<long double> U_0(U); // Copy of intial u_0, For some reason
+    //vector<long double> U_0(U); // Copy of intial u_0, For some reason?
 
     get_param();
 
@@ -68,7 +68,7 @@ int main(){
 
 
 /// @brief Simulating the time stepping of PDE using Finite Volume Method and Flux Scheme
-/// @param u_n This Current Time Step data
+/// @param u_n Current Time Step data U^n_j
 void simulate(vector<long double> &u_n){
     // Output dump files
     ofstream out_file("simulation_data.txt");
