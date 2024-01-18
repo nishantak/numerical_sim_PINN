@@ -10,14 +10,16 @@ long double calculate_tv(vector<long double>);
 // Function Signatures
 
 
-// Simulation Parameters
-int ghost_cells = 4;    // Number of ghost cells 
-int Nx = 200 + ghost_cells;   // Number of spatial points 
-double xmin = 0, xmax = 2*M_PI;  // Domain limits
+// Simulation Parameters 
+double xmin = 0, xmax = 40;  // Domain limits
 double L = abs(xmax- xmin);   //Domain Length
-long double dx = L/(Nx-1);  // Cell width
+int ghost_cells = 4;    // Number of ghost cells 
+int Nx = 45 + ghost_cells;   // Number of spatial points
+long double dx = L/(Nx-1);  // Cell width 
+// long double dx = 0.9; // Cell Width
+// int Nx = L/dx + ghost_cells; // Number of Spatial Points
 
-double cfl = 0.5;  // Stability Parameter - CFL Number 
+double cfl = 0.01;  // Stability Parameter - CFL Number 
 long double c=1;  // Wave Velocity
 
 long double dt = cfl * dx / c;  // Time step
@@ -41,11 +43,11 @@ long double num_flux(long double u, long double u_next){
 
 /// @brief initialise with intial condition
 void intialise(vector<long double> &u){
-    cout << "Initial Condition: U_0(x_j) = sin(x_j+1/2)" << endl << endl;
+    cout << "Initial Condition: U_0(x_j) = 0.25 * (sech(sqrt(0.5)/2 * x -7))^2" << endl << endl;
     for(int j=0; j<Nx; j++)
         //u[j] = xmin + (j+0.5)*dx > 0 ? 0 : 1; // Discrete Initial data, x_i > 0 ? 0 : 1 
         //u[j] = sin((xmin + (j+0.5)*dx)); // U_0(x_j) = sin(x_j+1/2)
-        u[j] = 0.25 * (pow(1/cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx) - 7), 2)); 
+        u[j] = 0.25 * (pow(1/cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx) - 7), 2)); // U_0(x_j) = 0.25 * ( sech(sqrt(0.5)/2 * x -7) )^2 
 }
 
 //Driver Code 
@@ -156,13 +158,13 @@ void write_data(ofstream& filename, vector<long double> u, int start, int end){
 
 /// @brief Print Simulation Parameters
 void get_param(){
-    cout << endl << "Number of Spatial Points (Nx): " << Nx - ghost_cells << endl;
     cout << "Domain Limits (xmin, xmax): " << xmin << ", " << xmax << endl;
     cout << "Domain Length (L): " << L << endl;
+    cout << endl << "Number of Spatial Points (Nx): " << Nx - ghost_cells << endl;
     cout << "Cell Width (dx): " << dx << endl << endl;
     cout << "Stability Parameter (CFL Number): " << cfl << endl << endl;
     cout << "Wave Velocity (c): " << c << endl << endl;
-    cout << "Time Step (dt): " << dt << endl;
     cout << "Final Time (Tf): " << Tf << endl;
+    cout << "Time Step (dt): " << dt << endl;
     cout << "Number of Time Steps (Nt): " << Nt << endl << endl;
 }

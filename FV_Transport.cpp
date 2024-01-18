@@ -11,11 +11,14 @@ long double calculate_tv(vector<long double>);
 
 
 // Simulation Parameters
-int ghost_cells = 2;    // Number of ghost cells 
-int Nx = 200 + ghost_cells;   // Number of spatial points 
 double xmin = 0, xmax = 2*M_PI;  // Domain limits
 double L = abs(xmax- xmin);   // Domain Length
-long double dx = L/(Nx-1);  // Cell width
+int ghost_cells = 2;    // Number of ghost cells 
+// int Nx = 200 + ghost_cells;   // Number of spatial points 
+// long double dx = L/(Nx-1);  // Cell width
+long double dx = 0.01; // Cell Width
+int Nx = L/dx + ghost_cells; // Number of Spatial Points
+
 
 double cfl = 0.5;   // Stability Parameter - CFL Number 
 long double c=1;  // Wave Velocity
@@ -146,13 +149,13 @@ void write_data(ofstream& filename, vector<long double> u, int start, int end){
 
 /// @brief Print Simulation Parameters
 void get_param(){
-    cout << endl << "Number of Spatial Points (Nx): " << Nx - ghost_cells << endl;
-    cout << "Domain Limits (xmin, xmax): " << xmin << ", " << xmax << endl;
+    cout << endl << "Domain Limits (xmin, xmax): " << xmin << ", " << xmax << endl;
     cout << "Domain Length (L): " << L << endl;
+    cout << "Number of Spatial Points (Nx): " << Nx - ghost_cells << endl;
     cout << "Cell Width (dx): " << dx << endl << endl;
     cout << "Stability Parameter (CFL Number): " << cfl << endl << endl;
     cout << "Wave Velocity (c): " << c << endl << endl;
-    cout << "Time Step (dt): " << dt << endl;
     cout << "Final Time (Tf): " << Tf << endl;
+    cout << "Time Step (dt): " << dt << endl;
     cout << "Number of Time Steps (Nt): " << Nt << endl << endl;
 }
