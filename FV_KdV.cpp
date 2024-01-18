@@ -53,7 +53,6 @@ void intialise(vector<long double> &u){
 //Driver Code 
 int main(){
 
-    setprecision(8);
     vector<long double> U(Nx, 0); // U(x);
     //vector<long double> U_0(U); // Copy of intial u_0, For some reason?
 

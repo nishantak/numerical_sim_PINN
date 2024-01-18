@@ -87,7 +87,6 @@ void simulate(vector<long double> &u_n){
     while(t<Tf){
         
         vector<long double> u_n_plus1(u_n); // Next Time Step, U^n+1_j, initialised with U^n_j
-
         for(int j=first_cell; j<=last_cell; j++){
             
             // Numerical Flux
@@ -141,6 +140,7 @@ void plot(){
 
 /// @brief write data to file using file stream
 void write_data(ofstream& filename, vector<long double> u, int start, int end){
+    filename.precision(8);
     for(int i=start; i<=end; i++)
         filename << u[i] << " ";
     filename << endl;
