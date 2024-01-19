@@ -93,7 +93,7 @@ int main(){
     intialise(U, 3);
     simulate(U);
 
-    cout << "Total Variation: " << calculate_tv(U) << endl;
+    cout << "Total Variation: " << calculate_tv(U) << endl << endl;
     
     plot();
 
