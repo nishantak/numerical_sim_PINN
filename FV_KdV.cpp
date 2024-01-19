@@ -15,19 +15,19 @@ long double calculate_tv(vector<long double>);
 double xmin = 0, xmax = 40.0;  // Domain limits
 double L = abs(xmax- xmin);   //Domain Length
 int ghost_cells = 4;    // Number of ghost cells 
-int Nx = 44 + ghost_cells;   // Number of spatial points
+int Nx = 210 + ghost_cells;   // Number of spatial points
 long double dx = L/(Nx-1);  // Cell width 
 // long double dx = 0.9; // Cell Width
 // int Nx = L/dx + ghost_cells; // Number of Spatial Points
 
 double cfl = 0.01;  // Stability Parameter - CFL Number 
-long double c=1;  // Wave Velocity
+long double c = 1;  // Wave Velocity
 
 long double dt = cfl * dx / c;  // Time step
-double Tf = 5;         // Final time / Total Time
+double Tf = 5.0;         // Final time / Total Time
 int Nt = (int)(Tf/dt);  // No. of time steps
 
-int first_cell = 3, last_cell = Nx-2;   // j domain Limits
+int first_cell = 2, last_cell = Nx-3;   // j domain Limits
 
 
 // Returns Flux, u^2 / 2
@@ -43,6 +43,7 @@ long double num_flux(long double u, long double u_next){
 
 
 /// @brief initialise with intial condition
+/// @param condition Initial Condition
 void intialise(vector<long double> &u, int condition){
 
     cout << "Initial Condition: U_0(x_j) = ";
@@ -119,28 +120,30 @@ void simulate(vector<long double> &u_n){
 
         vector<long double> u_n_plus1(u_n); // Next Time Step, U^n+1_j, initialised with U^n_j
         for(int j=first_cell; j<=last_cell; j++){
-            
+
             // Numerical Flux
             long double F_j_plus_half = num_flux(u_n[j], u_n[j+1]);
             long double F_j_min_half = num_flux(u_n[j-1], u_n[j]);
 
-            /// U_xxx Discretization | (u^n_j - 3u^n_j-1 + 3u^n_j-2 - u^n_j-3) / dx^3
-            long double third_derivative = (u_n[j] - 3.0*u_n[j-1] + 3.0*u_n[j-2] - u_n[j-3]) / (dx*dx*dx);
+            // U_xxx Discretization 1: (u^n_j - 3u^n_j-1 + 3u^n_j-2 - u^n_j-3) / dx^3
+            // long double third_derivative = (u_n[j] - 3.0*u_n[j-1] + 3.0*u_n[j-2] - u_n[j-3]) / (dx*dx*dx);
             
+            // U_xxx Discretization 2: (u^n_j+2 - 2u^n_j+1 + 2u^n_j-1 - u^n_j-2) / 2dx^3
+            long double third_derivative = (u_n[j+2] - 2.0*u_n[j+1] + 2.0*u_n[j-1] - u_n[j-2]) / (2 * (dx*dx*dx));
+
             // Update using Numerical Scheme
-           u_n_plus1[j] -= (dt/dx) * (F_j_plus_half - F_j_min_half) + dt*third_derivative;
+            u_n_plus1[j] -= (dt/dx) * (F_j_plus_half - F_j_min_half) + dt*third_derivative;
            
-            // To debug third derivative calcualtions
-            // u_n_plus1[j] = third_derivative;
+            // u_n_plus1[j] = third_derivative; // To debug third derivative calcualtions
             // if (j==3)cout << endl << u_n[j] << endl << -3*u_n[j-1] << endl << 3*u_n[j-2] << endl<< -u_n[j-3] << endl << (u_n[j] - 3.0*u_n[j-1] + 3.0*u_n[j-2] - u_n[j-3]) <<endl; 
         }
 
         //Boundary conditions      
         long double dU = u_n_plus1[4] - u_n_plus1[3];
-        for(int i=2; i>=0; i--)
+        for(int i=first_cell-1; i>=0; i--)
             u_n_plus1[i] = u_n_plus1[i+1] - dU; 
         u_n_plus1[Nx-1] = u_n_plus1[Nx-2] + dU;
-        // u_n_plus1[Nx-1] = u_n_plus1[Nx-2]; // RIGHT Boundary
+        // u_n_plus1[Nx-1] = u_n_plus1[Nx-2]; // RIGHT Boundary 
         // u_n_plus1[0] = u_n_plus1[Nx-1]; // LEFT Boundary
         // u_n_plus1[1] = u_n_plus1[0]; u_n_plus1[2] = u_n_plus1[1]; // Cells -1, -2
         
@@ -153,12 +156,12 @@ void simulate(vector<long double> &u_n){
         t+=dt;
 
     } write_data(fin_file, u_n, 1, Nx-2); // Write Simulation Data for FINAL time step
-out_file.close(); fin_file.close();
 
+out_file.close(); fin_file.close();
 }
 
 
-///@brief Exact Solution
+///@brief Calcuates exact Solution
 ///@param condition Initial Condition
 void uex(int condition){
     ofstream ex_file("uex.txt"); // Exact Solution data dump file
@@ -166,8 +169,8 @@ void uex(int condition){
         case 3:
             // Writing exact solution to file
             for(int j=first_cell; j<=last_cell; j++)
-                    ex_file << 0.25 * (pow(1/cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx - 2.5) - 7), 2)) << " ";
-            
+                ex_file << 0.25 * (pow(1/cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx - 2.5) - 7), 2)) << " ";
+
             break;
 
         default: break;
@@ -175,7 +178,7 @@ void uex(int condition){
 }
 
 
-/// @brief Calculates the TV bound
+/// @brief Calculates the TV
 long double calculate_tv(vector<long double> u) {
     double tv_norm = 0.0;
     for (int j = first_cell; j <= last_cell + 1; j++) {
@@ -186,7 +189,7 @@ long double calculate_tv(vector<long double> u) {
 }
 
 
-/// @brief Pass plot data to python matplotlib script and plots graph
+/// @brief Pass plot data to python matplotlib script and plot graph
 void plot(){
     // Set environment variables to pass to python script
     setenv("xmin", to_string(xmin).c_str(), 1);

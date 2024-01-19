@@ -3,6 +3,7 @@ using namespace std;
 
 // Function Signatures
 void simulate(vector<long double>&);
+void uex(int);
 void get_param();
 void plot();
 void write_data(ofstream&, vector<long double>, int, int);
@@ -11,7 +12,7 @@ long double calculate_tv(vector<long double>);
 
 
 // Simulation Parameters
-double xmin = 0, xmax = 2*M_PI;  // Domain limits
+double xmin = 0, xmax = 40;  // Domain limits
 double L = abs(xmax- xmin);   // Domain Length
 int ghost_cells = 2;    // Number of ghost cells 
 // int Nx = 200 + ghost_cells;   // Number of spatial points 
@@ -20,7 +21,7 @@ long double dx = 0.01; // Cell Width
 int Nx = L/dx + ghost_cells; // Number of Spatial Points
 
 double cfl = 0.5;   // Stability Parameter - CFL Number 
-long double c=1;  // Wave Velocity
+long double c = 1;  // Wave Velocity
 
 long double dt = cfl * dx / c;  // Time step
 double Tf = 2.0;         // Final time / Total Time
@@ -76,8 +77,8 @@ void intialise(vector<long double> &u, int condition){
                 break;
 
             default: break;
-    }
-    
+    } 
+    uex(condition); // Compute exact solution based on initial condition
 }
 
 
@@ -143,6 +144,23 @@ void simulate(vector<long double> &u_n){
 
 out_file.close(); fin_file.close();
 
+}
+
+
+///@brief Calcuates exact Solution
+///@param condition Initial Condition
+void uex(int condition){
+    ofstream ex_file("uex.txt"); // Exact Solution data dump file
+    switch (condition){
+        case 3:
+            // Writing exact solution to file
+            for(int j=first_cell; j<=last_cell; j++)
+                ex_file << 0.25 * (pow(1/cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx - 2.5) - 7), 2)) << " ";
+
+            break;
+
+        default: break;
+    } ex_file.close();
 }
 
 
