@@ -14,7 +14,7 @@ long double calculate_tv(vector<long double>);
 double xmin = 0, xmax = 40.0;  // Domain limits
 double L = abs(xmax- xmin);   //Domain Length
 int ghost_cells = 4;    // Number of ghost cells 
-int Nx = 45 + ghost_cells;   // Number of spatial points
+int Nx = 44 + ghost_cells;   // Number of spatial points
 long double dx = L/(Nx-1);  // Cell width 
 // long double dx = 0.9; // Cell Width
 // int Nx = L/dx + ghost_cells; // Number of Spatial Points

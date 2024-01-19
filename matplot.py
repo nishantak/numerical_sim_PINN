@@ -10,7 +10,7 @@ xmin = float(os.getenv("xmin"))
 xmax = float(os.getenv("xmax"))
 Nx = int(os.getenv("Nx"))
 
-# Plotting
+# Plot
 x_values = np.linspace(xmin, xmax, Nx)
 time_steps = len(data)
 plt.xlabel('x')

@@ -129,7 +129,7 @@ void simulate(vector<long double> &u_n){
 
         // Boundary conditions        
         u_n_plus1[Nx-1] = u_n_plus1[Nx-2]; // RIGHT Boundary
-        u_n_plus1[0] = u_n_plus1[Nx-1]; // LEFT Boundary
+        u_n_plus1[0] = u_n_plus1[Nx-1];  // LEFT Boundary
         
         // Store u^n+1_j in u^n_j for next time step
         u_n = u_n_plus1; 
