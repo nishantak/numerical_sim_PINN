@@ -11,7 +11,7 @@ long double calculate_tv(vector<long double>);
 
 
 // Simulation Parameters 
-double xmin = 0, xmax = 40;  // Domain limits
+double xmin = 0, xmax = 40.0;  // Domain limits
 double L = abs(xmax- xmin);   //Domain Length
 int ghost_cells = 4;    // Number of ghost cells 
 int Nx = 45 + ghost_cells;   // Number of spatial points
@@ -42,13 +42,44 @@ long double num_flux(long double u, long double u_next){
 
 
 /// @brief initialise with intial condition
-void intialise(vector<long double> &u){
-    cout << "Initial Condition: U_0(x_j) = 0.25 * (sech(sqrt(0.5)/2 * x -7))^2" << endl << endl;
-    for(int j=0; j<Nx; j++)
-        //u[j] = xmin + (j+0.5)*dx > 0 ? 0 : 1; // Discrete Initial data, x_i > 0 ? 0 : 1 
-        //u[j] = sin((xmin + (j+0.5)*dx)); // U_0(x_j) = sin(x_j+1/2)
-        u[j] = 0.25 * (pow(1/cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx) - 7), 2)); // U_0(x_j) = 0.25 * ( sech(sqrt(0.5)/2 * x -7) )^2 
+void intialise(vector<long double> &u, int condition){
+    
+    cout << "Initial Condition: U_0(x_j) = ";
+    switch (condition){
+
+            // U_0(x_j) = sin(x_j+1/2) || U_0(x_j) = -cos(x_j+1/2)
+            case 1:
+                cout << "sin(x_j+1/2)" << endl << endl;
+                
+                for(int j=0; j<Nx; j++)
+                    u[j] = sin((xmin + (j+0.5)*dx)); 
+                    //u[j] = -cos((xmin + (j+0.5)*dx));
+                
+                break;
+
+            // Discrete initial data, x_i > 0 ? 0 : 1
+            case 2:
+                cout << "x_i > 0 ? 0 : 1" << endl << endl;
+                
+                for(int j=0; j<Nx; j++)
+                    u[j] = xmin + (j+0.5)*dx > 0 ? 0 : 1;
+                
+                break;
+            
+            // U_0(x_j) = 0.25 * ( sech(sqrt(0.5)/2 * x -7) )^2 
+            case 3:
+                cout << "0.25 * (sech(sqrt(0.5)/2 * x -7))^2" << endl << endl;
+                
+                for(int j=0; j<Nx; j++)
+                    u[j] = 0.25 * (pow(1/cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx) - 7), 2));
+                
+                break;
+
+            default: break;
+    }
+
 }
+
 
 //Driver Code 
 int main(){
@@ -58,7 +89,7 @@ int main(){
 
     get_param();
 
-    intialise(U);
+    intialise(U, 3);
     simulate(U);
 
     cout << "Total Variation: " << calculate_tv(U) << endl;
@@ -75,12 +106,12 @@ void simulate(vector<long double> &u_n){
     // Output dump files
     ofstream out_file("simulation_data.txt");
     ofstream fin_file("U_final.txt");
-    ofstream debug_file("all_data.txt");
+    //ofstream debug_file("all_data.txt");
 
     double t=0; //Current Time
     
     write_data(out_file, u_n, first_cell, last_cell); // Write initial data
-    write_data(debug_file, u_n, 0, Nx-1);
+    //write_data(debug_file, u_n, 0, Nx-1);
     
     // Time Stepping Loop
     while(t<Tf){
@@ -97,7 +128,10 @@ void simulate(vector<long double> &u_n){
             
             // Update using Numerical Scheme
            u_n_plus1[j] -= (dt/dx) * (F_j_plus_half - F_j_min_half) + dt*third_derivative;
-           //if (j==3)cout << endl << u_n[j] << endl << -3*u_n[j-1] << endl << 3*u_n[j-2] << endl<< -u_n[j-3] << endl << (u_n[j] - 3.0*u_n[j-1]+ 3.0*u_n[j-2] - 1*u_n[j-3]) <<endl; // To debug third derivative calcualtions
+           
+            // To debug third derivative calcualtions
+            // u_n_plus1[j] = third_derivative;
+            // if (j==3)cout << endl << u_n[j] << endl << -3*u_n[j-1] << endl << 3*u_n[j-2] << endl<< -u_n[j-3] << endl << (u_n[j] - 3.0*u_n[j-1] + 3.0*u_n[j-2] - u_n[j-3]) <<endl; 
         }
 
         //Boundary conditions      
@@ -113,12 +147,12 @@ void simulate(vector<long double> &u_n){
         u_n = u_n_plus1; 
 
         write_data(out_file, u_n, first_cell, last_cell); // Write Simulation Data for THIS time step
-        write_data(debug_file, u_n, 0, Nx-1);
+        //write_data(debug_file, u_n, 0, Nx-1);
 
         t+=dt;
 
     } write_data(fin_file, u_n, 1, Nx-2); // Write Simulation Data for FINAL time step
-
+    
 out_file.close(); fin_file.close();
 
 }
@@ -157,9 +191,9 @@ void write_data(ofstream& filename, vector<long double> u, int start, int end){
 
 /// @brief Print Simulation Parameters
 void get_param(){
-    cout << "Domain Limits (xmin, xmax): " << xmin << ", " << xmax << endl;
+    cout << endl << "Domain Limits (xmin, xmax): " << xmin << ", " << xmax << endl;
     cout << "Domain Length (L): " << L << endl;
-    cout << endl << "Number of Spatial Points (Nx): " << Nx - ghost_cells << endl;
+    cout << "Number of Spatial Points (Nx): " << Nx - ghost_cells << endl;
     cout << "Cell Width (dx): " << dx << endl << endl;
     cout << "Stability Parameter (CFL Number): " << cfl << endl << endl;
     cout << "Wave Velocity (c): " << c << endl << endl;

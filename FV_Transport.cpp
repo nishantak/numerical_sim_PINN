@@ -19,7 +19,6 @@ int ghost_cells = 2;    // Number of ghost cells
 long double dx = 0.01; // Cell Width
 int Nx = L/dx + ghost_cells; // Number of Spatial Points
 
-
 double cfl = 0.5;   // Stability Parameter - CFL Number 
 long double c=1;  // Wave Velocity
 
@@ -43,11 +42,42 @@ long double num_flux(long double u, long double u_next){
 
 
 /// @brief initialise with intial condition
-void intialise(vector<long double> &u){
-    cout << "Initial Condition: U_0(x_j) = sin(x_j+1/2)" << endl << endl;
-    for(int j=0; j<Nx; j++)
-        //u[j] = xmin + (j+0.5)*dx > 0 ? 0 : 1; // Discrete Initial data, x_i > 0 ? 0 : 1 
-        u[j] = sin((xmin + (j+0.5)*dx)); // U_0(x_j) = sin(x_j+1/2)
+void intialise(vector<long double> &u, int condition){
+    
+    cout << "Initial Condition: U_0(x_j) = ";
+    switch (condition){
+
+            // U_0(x_j) = sin(x_j+1/2) || U_0(x_j) = -cos(x_j+1/2)
+            case 1:
+                cout << "sin(x_j+1/2)" << endl << endl;
+                
+                for(int j=0; j<Nx; j++)
+                    u[j] = sin((xmin + (j+0.5)*dx)); 
+                    //u[j] = -cos((xmin + (j+0.5)*dx));
+                
+                break;
+
+            // Discrete initial data, x_i > 0 ? 0 : 1
+            case 2:
+                cout << "x_i > 0 ? 0 : 1" << endl << endl;
+                
+                for(int j=0; j<Nx; j++)
+                    u[j] = xmin + (j+0.5)*dx > 0 ? 0 : 1;
+                
+                break;
+            
+            // U_0(x_j) = 0.25 * ( sech(sqrt(0.5)/2 * x -7) )^2 
+            case 3:
+                cout << "0.25 * (sech(sqrt(0.5)/2 * x -7))^2" << endl << endl;
+                
+                for(int j=0; j<Nx; j++)
+                    u[j] = 0.25 * (pow(1/cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx) - 7), 2));
+                
+                break;
+
+            default: break;
+    }
+    
 }
 
 
@@ -59,7 +89,7 @@ int main(){
 
     get_param();
 
-    intialise(U);
+    intialise(U, 1);
     simulate(U);
 
     cout << "Total Variation: " << calculate_tv(U) << endl;
