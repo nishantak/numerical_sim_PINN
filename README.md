@@ -1,8 +1,9 @@
-# Numerical-Sim
-Finite Volume Scheme using Lax-Friedrich Numerical Flux
+# Numerical Simulation
+Numerical Analysis scheme (currently) using _Lax-Friedrich_ Numerical Flux and _u_xxx discretization_
+
 
 # Steps to run: -
-  1. Make sure you have **Python** and **C++** installed;
+  1. Make sure you have **Python**, **matplotlib** and **C++** installed;
      
   2. Clone / Download this git repository into your _working directory_ (Make sure the Python script and C++ file are in the **same** directory);
        OR
