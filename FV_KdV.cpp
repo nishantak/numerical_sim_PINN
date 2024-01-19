@@ -17,17 +17,17 @@ double L = abs(xmax- xmin);   //Domain Length
 int ghost_cells = 4;    // Number of ghost cells 
 int Nx = 210 + ghost_cells;   // Number of spatial points
 long double dx = L/(Nx-1);  // Cell width 
-// long double dx = 0.9; // Cell Width
+// long double dx = 0.2; // Cell Width
 // int Nx = L/dx + ghost_cells; // Number of Spatial Points
 
-double cfl = 0.01;  // Stability Parameter - CFL Number 
+double cfl = 0.005;  // Stability Parameter - CFL Number 
 long double c = 1;  // Wave Velocity
 
 long double dt = cfl * dx / c;  // Time step
 double Tf = 5.0;         // Final time / Total Time
 int Nt = (int)(Tf/dt);  // No. of time steps
 
-int first_cell = 2, last_cell = Nx-3;   // j domain Limits
+int first_cell = 3, last_cell = Nx-2;   // j domain Limits
 
 
 // Returns Flux, u^2 / 2
@@ -126,10 +126,10 @@ void simulate(vector<long double> &u_n){
             long double F_j_min_half = num_flux(u_n[j-1], u_n[j]);
 
             // U_xxx Discretization 1: (u^n_j - 3u^n_j-1 + 3u^n_j-2 - u^n_j-3) / dx^3
-            // long double third_derivative = (u_n[j] - 3.0*u_n[j-1] + 3.0*u_n[j-2] - u_n[j-3]) / (dx*dx*dx);
+            long double third_derivative = (u_n[j] - 3.0*u_n[j-1] + 3.0*u_n[j-2] - u_n[j-3]) / (dx*dx*dx);
             
             // U_xxx Discretization 2: (u^n_j+2 - 2u^n_j+1 + 2u^n_j-1 - u^n_j-2) / 2dx^3
-            long double third_derivative = (u_n[j+2] - 2.0*u_n[j+1] + 2.0*u_n[j-1] - u_n[j-2]) / (2 * (dx*dx*dx));
+            // long double third_derivative = (u_n[j+2] - 2.0*u_n[j+1] + 2.0*u_n[j-1] - u_n[j-2]) / (2 * (dx*dx*dx));
 
             // Update using Numerical Scheme
             u_n_plus1[j] -= (dt/dx) * (F_j_plus_half - F_j_min_half) + dt*third_derivative;
