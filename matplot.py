@@ -3,7 +3,8 @@ import numpy as np
 import os
 
 # Read simulation data from output dump file
-data = np.loadtxt('simulation_data.txt')
+sim_data = np.loadtxt('simulation_data.txt')
+ex_data = np.loadtxt('uex.txt')
 
 #Read environment variables set by C++ code
 xmin = float(os.getenv("xmin"))
@@ -11,15 +12,17 @@ xmax = float(os.getenv("xmax"))
 Nx = int(os.getenv("Nx"))
 
 # Plot
-x_values = np.linspace(xmin, xmax, Nx)
-time_steps = len(data)
+x = np.linspace(xmin, xmax, Nx)
+time_steps = len(sim_data)
 plt.xlabel('x')
-plt.ylabel('U(x)')
+plt.ylabel('u(x)')
 
 for t in range(time_steps):
     plt.clf()
+    plt.plot(x, ex_data, linestyle=":", marker="o", markersize=1, markerfacecolor='none', label='Exact Solution') # Exact Soltuion
     plt.title(f'FVM Simulation after Time Step {t}')
-    plt.plot(x_values, data[t, :], linestyle=":", marker="o", markersize=1, markerfacecolor='none')
+    plt.plot(x, sim_data[t, :], linestyle=":", marker="o", markersize=1, markerfacecolor='none', label='Numerical Solution') # Numerical Solution
+    plt.legend()
     plt.draw()
     plt.pause(0.05)
 

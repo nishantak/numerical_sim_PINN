@@ -3,6 +3,7 @@ using namespace std;
 
 // Function Signatures
 void simulate(vector<long double>&);
+void uex(int);
 void get_param();
 void plot();
 void write_data(ofstream&, vector<long double>, int, int);
@@ -43,7 +44,7 @@ long double num_flux(long double u, long double u_next){
 
 /// @brief initialise with intial condition
 void intialise(vector<long double> &u, int condition){
-    
+
     cout << "Initial Condition: U_0(x_j) = ";
     switch (condition){
 
@@ -77,7 +78,7 @@ void intialise(vector<long double> &u, int condition){
 
             default: break;
     }
-
+    uex(condition); // Compute exact solution based on initial condition
 }
 
 
@@ -152,9 +153,25 @@ void simulate(vector<long double> &u_n){
         t+=dt;
 
     } write_data(fin_file, u_n, 1, Nx-2); // Write Simulation Data for FINAL time step
-    
 out_file.close(); fin_file.close();
 
+}
+
+
+///@brief Exact Solution
+///@param condition Initial Condition
+void uex(int condition){
+    ofstream ex_file("uex.txt"); // Exact Solution data dump file
+    switch (condition){
+        case 3:
+            // Writing exact solution to file
+            for(int j=first_cell; j<=last_cell; j++)
+                    ex_file << 0.25 * (pow(1/cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx - 2.5) - 7), 2)) << " ";
+            
+            break;
+
+        default: break;
+    } ex_file.close();
 }
 
 
