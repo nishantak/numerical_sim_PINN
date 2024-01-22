@@ -19,16 +19,32 @@ long double derivative(vector<long double> &u, int x_index, int count, long doub
         u_x /= (dx);
         return u_x; 
     }
-  
-    vector<long double> del_u(u.size() - x_index- 1, 0);
-    // Calculate forward differnce del^n_u
-    for (int i = x_index; i < u.size() - 1; i++) {
-        del_u[i-x_index] = u[i + 1] - u[i];
 
-    } u_x += pow(-1, count++) * (1.0/count) * del_u[0];
-        
-    return derivative(del_u, 0, count, u_x); // Recursive call to caculate forward difference of del^n_u
-   
+    vector<long double> del_u(u.size() - x_index- 1, 0);
+    if(x_index <= 50){
+        // Calculate forward differnce del^n_u
+        for (int i = x_index; i < u.size() - 1; i++) {
+            del_u[i-x_index] = u[i + 1] - u[i];
+
+        } u_x += pow(-1, count++) * (1.0/count) * del_u[0];
+            
+        return derivative(del_u, 0, count, u_x); // Recursive call to caculate forward difference of del^n_u
+    }
+
+    else if(x_index >= 150){
+        // Calculate backward differnce del^n_u
+        for (int i = x_index; i < 0; i++) {
+            del_u[i-x_index] = u[i] - u[i-1];
+
+        } u_x += pow(-1, count++) * (1.0/count) * del_u[0];
+            
+        return derivative(del_u, 0, count, u_x); // Recursive call to caculate forward difference of del^n_u
+    }
+    
+    else if(x_index > 50 && x_index < 150){
+        //Implement Stirling Interpoaltion
+    }
+
 }
 
 
