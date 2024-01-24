@@ -38,6 +38,23 @@ int main(){
 
     get_param();
 
+    /*
+        initialise() function takes 2 inputs, the vector U and and an integer denoting the 
+        initial condition. The Initial Conditions are as follows: -
+
+            1 : U_0(x_j) = sin(x_j+1/2) || U_0(x_j) = -cos(x_j+1/2)
+
+            2 : Discrete initial data, U_0(x_j) = (x_i > 0) ? 0 : 1
+
+            3 : U_0(x_j) = 0.25 * ( sech(sqrt(0.5)/2 * x -7) )^2 
+
+        Similarly, simulate() function takes 2 inputs, the vector U and an integer denoting the
+        flux scheme. The Flux Schemes are as follows: -
+
+            1: Lax-Friedrich
+
+            2: Lax-Wendroff
+    */ 
     initialise(U, 3);
     simulate(U, 1);
 
