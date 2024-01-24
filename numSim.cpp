@@ -94,14 +94,10 @@ void simulate(vector<long double> &u_n, int flux_scheme){
             // u_xxx = third_derivative(u_n);
 
             // Update using Numerical Scheme
-            u_n_plus1[j] = dt*u_xxx;
+            u_n_plus1[j] -= (dt/dx) * (F_j_plus_half - F_j_min_half) + dt*u_xxx;
         }
 
         //Boundary conditions      
-        // long double dU = u_n_plus1[first_cell] - u_n_plus1[first_cell+1];
-        // for(int i=first_cell-1; i>=0; i--)
-        //     u_n_plus1[i] = u_n_plus1[i+1] - dU; 
-        // u_n_plus1[Nx-1] = u_n_plus1[Nx-2] + dU;
         u_n_plus1[Nx-1] = 0; // RIGHT Boundary 
         u_n_plus1[0] = 0; // LEFT Boundary
         u_n_plus1[1] = u_n_plus1[0]; u_n_plus1[2] = u_n_plus1[1]; // Cells -1, -2
