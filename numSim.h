@@ -23,10 +23,10 @@ extern int first_cell, last_cell;   // j domain Limits
 // Function Prototypes
 long double flux(long double);
 long double num_flux(long double, long double, int);
-void intialise(vector<long double>&, int);
+void initialise(vector<long double>&, int);
 vector<long double> third_derivative(vector<long double> &);
 void simulate(vector<long double>&, int);
-void uex(int);
+void u_ex(int);
 void get_param();
 void plot();
 void write_data(ofstream&, vector<long double>, int, int);
