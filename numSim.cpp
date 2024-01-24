@@ -1,7 +1,5 @@
+#include <bits/stdc++.h>
 #include "numSim.h"
-#include <iostream>
-#include <math.h>
-#include <vector>
 
 using namespace std;
 
