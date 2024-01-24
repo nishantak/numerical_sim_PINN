@@ -38,7 +38,7 @@ int main(){
 
     get_param();
 
-    intialise(U, 3);
+    initialise(U, 3);
     simulate(U, 1);
 
     cout << "Total Variation: " << calculate_tv(U) << endl << endl;
