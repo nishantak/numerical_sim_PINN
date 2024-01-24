@@ -64,8 +64,8 @@ void intialise(vector<long double> &u, int condition){
 /// @param u_n Current Time Step data U^n_j
 void simulate(vector<long double> &u_n, int flux_scheme){
     // Output dump files
-    ofstream out_file("dump_files/simulation_data.txt");
-    ofstream fin_file("dump_files/U_final.txt");
+    ofstream out_file("simulation_data.txt");
+    ofstream fin_file("U_final.txt");
     //ofstream debug_file("dump_files/all_data.txt");
 
     double t=0; //Current Time
@@ -175,7 +175,7 @@ long double calculate_tv(vector<long double> u) {
 ///@brief Calcuates exact Solution
 ///@param condition Initial Condition
 void uex(int condition){
-    ofstream ex_file("dump_files/uex.txt"); // Exact Solution data dump file
+    ofstream ex_file("uex.txt"); // Exact Solution data dump file
     switch (condition){
         case 3:
             // Writing exact solution to file

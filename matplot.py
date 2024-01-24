@@ -3,8 +3,8 @@ import numpy as np
 import os
 
 # Read simulation data from output dump file
-sim_data = np.loadtxt('dump_files/simulation_data.txt')
-ex_data = np.loadtxt('dump_files/uex.txt')
+sim_data = np.loadtxt('simulation_data.txt')
+ex_data = np.loadtxt('uex.txt')
 
 #Read environment variables set by C++ code
 xmin = float(os.getenv("xmin"))
