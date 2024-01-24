@@ -21,8 +21,8 @@ long double num_flux(long double u, long double u_next, int scheme){
 }
 
 
-/// @brief initialise with intial condition
-void intialise(vector<long double> &u, int condition){
+/// @brief initialise with initial condition
+void initialise(vector<long double> &u, int condition){
     cout << "Initial Condition: U_0(x_j) = ";
     switch (condition){
             // U_0(x_j) = sin(x_j+1/2) || U_0(x_j) = -cos(x_j+1/2)
@@ -54,7 +54,7 @@ void intialise(vector<long double> &u, int condition){
                 break;
 
             default: break;
-    } uex(condition); // Compute exact solution based on initial condition
+    } u_ex(condition); // Compute exact solution based on initial condition
 }
 
 
@@ -123,35 +123,31 @@ vector<long double> third_derivative(vector<long double> &u){
         u_der[i] = derivative(u, i);
     u_der[Nx - 1] = 1;
 
-    // // Second Derivative 
-    // for (int i = first_cell; i <= last_cell; i++)
-    //     u_der[i] = derivative(u_der, i);
-    // u_der[Nx - 1] = 0;
+    // Second Derivative 
+    for (int i = first_cell; i <= last_cell; i++)
+        u_der[i] = derivative(u_der, i);
+    u_der[Nx - 1] = 0;
 
-    // // Third Derivative 
-    // for (int i = first_cell; i = last_cell; i++)
-    //     u_der[i] = derivative(u_der, i);
-    // u_der[Nx - 1] = -1;
+    // Third Derivative 
+    for (int i = first_cell; i = last_cell; i++)
+        u_der[i] = derivative(u_der, i);
+    u_der[Nx - 1] = -1;
 
     return u_der;
 }
 
 
 /// @brief Newton Difference Interpolation Method for Derivative
-/// @param u Spatial Array u^n_j
-/// @return First Derivative of u^n_{x_index}
-long double derivative(vector<long double> &u, int x_index) {
-    long double u_x;
-    
-    // Calculate forward differnce del^n_u
+/// @param u Current Time Step data U^n_j
+long double derivative(vector<long double> &u, int x_index) {    
+    // Calculate forward difference del^n_u
     if(x_index <= 50) return (u[x_index+1] - u[x_index]) / dx;
 
-    // Calculate backward differnce del^n_u
+    // Calculate backward difference del^n_u
     else if(x_index >= 150) return (u[x_index] - u[x_index-1]) / dx; 
     
-    // Calculate Stirling Interpoaltion
+    // Calculate Stirling Interpolation
     else if(x_index > 50 && x_index < 150) return ((u[x_index+1] - u[x_index-1])) / (2*dx);
-
 }
 
 
@@ -166,9 +162,9 @@ long double calculate_tv(vector<long double> u) {
 }
 
 
-///@brief Calcuates exact Solution
+///@brief Calculates exact Solution
 ///@param condition Initial Condition
-void uex(int condition){
+void u_ex(int condition){
     ofstream ex_file("uex.txt"); // Exact Solution data dump file
     switch (condition){
         case 3:
