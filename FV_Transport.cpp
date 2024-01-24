@@ -2,7 +2,7 @@
 using namespace std;
 
 // Function Signatures
-void simulate(vector<long double>&);
+void simulate(vector<long double>&, int);
 void uex(int);
 void get_param();
 void plot();
@@ -21,7 +21,7 @@ long double dx = 0.01; // Cell Width
 int Nx = L/dx + ghost_cells; // Number of Spatial Points
 
 double cfl = 0.5;   // Stability Parameter - CFL Number 
-long double c = 1;  // Wave Velocity
+long double c = 1.0;  // Wave Velocity
 
 long double dt = cfl * dx / c;  // Time step
 double Tf = 2.0;         // Final time / Total Time
@@ -36,9 +36,23 @@ long double flux(long double u){
 };
 
 
-// Returns Numerical Flux, Numerical Flux Scheme (Lax-Friedrich)
-long double num_flux(long double u, long double u_next){
-    return 0.5 * (flux(u) + flux(u_next)) - ((0.5 / (dt/dx)) * (u_next - u));
+// Returns Numerical Flux, Numerical Flux Scheme 
+long double num_flux(long double u, long double u_next, int scheme){
+    switch(scheme){
+        // Lax-Friedrich
+        case 1:
+            return 0.5 * (flux(u) + flux(u_next)) - ((0.5 / (dt/dx)) * (u_next - u));
+            break;
+
+        // Lax-Wendroff
+        case 2:
+            return u;
+            break;
+        
+        default: break;
+    
+    }
+    
 }
 
 
@@ -72,7 +86,7 @@ void intialise(vector<long double> &u, int condition){
                 cout << "0.25 * (sech(sqrt(0.5)/2 * x -7))^2" << endl << endl;
                 
                 for(int j=0; j<Nx; j++)
-                    u[j] = 0.25 * (pow(1/cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx) - 7), 2));
+                    u[j] = 0.25 * (pow(1.0/cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx) - 7), 2));
                 
                 break;
 
@@ -91,9 +105,9 @@ int main(){
     get_param();
 
     intialise(U, 1);
-    simulate(U);
+    simulate(U, 1);
 
-    cout << "Total Variation: " << calculate_tv(U) << endl;
+    cout << "Total Variation: " << calculate_tv(U) << endl << endl;
     
     plot();
 
@@ -103,7 +117,7 @@ int main(){
 
 /// @brief Simulating the time stepping of PDE using Finite Volume Method and Flux Scheme
 /// @param u_n Current Time Step data U^n_j
-void simulate(vector<long double> &u_n){
+void simulate(vector<long double> &u_n, int flux_scheme){
     // Output dump files
     ofstream out_file("simulation_data.txt");
     ofstream fin_file("U_final.txt");
@@ -121,8 +135,8 @@ void simulate(vector<long double> &u_n){
         for(int j=first_cell; j<=last_cell; j++){
             
             // Numerical Flux
-            long double F_j_plus_half = num_flux(u_n[j], u_n[j+1]);
-            long double F_j_min_half = num_flux(u_n[j-1], u_n[j]);
+            long double F_j_plus_half = num_flux(u_n[j], u_n[j+1], flux_scheme);
+            long double F_j_min_half = num_flux(u_n[j-1], u_n[j], flux_scheme);
             
             // Update using Numerical Scheme
             u_n_plus1[j] -= (dt/dx) * (F_j_plus_half - F_j_min_half);
@@ -155,7 +169,7 @@ void uex(int condition){
         case 3:
             // Writing exact solution to file
             for(int j=first_cell; j<=last_cell; j++)
-                ex_file << 0.25 * (pow(1/cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx - 2.5) - 7), 2)) << " ";
+                ex_file << 0.25 * (pow(1.0/cosh(sqrt(0.5)/2.0 * (xmin + (j+0.5)*dx - 2.5) - 7.0), 2)) << " ";
 
             break;
 
