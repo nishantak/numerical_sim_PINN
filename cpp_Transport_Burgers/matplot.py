@@ -21,8 +21,9 @@ for t in range(time_steps):
     plt.clf()
     plt.title(f'FVM Simulation after Time Step {t}')
 
-    # Exact Soltuion
-    #plt.plot(x, ex_data, linestyle=":", marker="o", markersize=1, markerfacecolor='none', label='Exact Solution') 
+    # Exact Soltuion | Will give error if ex_data file is not according to initial data; in such case comment it
+    plt.plot(x, ex_data, linestyle=":", marker="o", markersize=1, markerfacecolor='none', label='Exact Solution') 
+    
     # Numerical Solution
     plt.plot(x, sim_data[t, :], linestyle=":", marker="o", markersize=1, markerfacecolor='none', label='Numerical Solution') 
     
