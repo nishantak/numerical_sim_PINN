@@ -209,70 +209,70 @@ void get_param(){
 //Unused Code Sections: -
 
 /// @brief Newton Difference Interpolation Method for Derivative
-/// @param u Current Time Step data U^n_j
-long double derivative(vector<long double> &u, int x_index) {   
-    // Calculate forward difference del^n_u
-    if(x_index <= 250) return (u[x_index+1] - u[x_index]) / dx; // Higher Order does not work well
+// /// @param u Current Time Step data U^n_j
+// long double derivative(vector<long double> &u, int x_index) {   
+//     // Calculate forward difference del^n_u
+//     if(x_index <= 250) return (u[x_index+1] - u[x_index]) / dx; // Higher Order does not work well
 
-    // Calculate backward difference del^n_u
-    else if(x_index >= 750) return (u[x_index] - u[x_index-1]) / dx; 
+//     // Calculate backward difference del^n_u
+//     else if(x_index >= 750) return (u[x_index] - u[x_index-1]) / dx; 
     
-    // Calculate Stirling Interpolation
-    else return ((u[x_index+1] - u[x_index-1])) / (2*dx);
-}
+//     // Calculate Stirling Interpolation
+//     else return ((u[x_index+1] - u[x_index-1])) / (2*dx);
+// }
 
-// Calculates Third Derivative using Newton Difference Interpolation Derivative
-vector<long double> third_derivative(vector<long double> &u){
-    vector<long double> u_der(u.size(), 0);
-    // First Derivative 
-    for (int i = first_cell; i <= last_cell; i++)
-        u_der[i] = derivative(u, i);
-    u_der[Nx - 1] = 1;
+// // Calculates Third Derivative using Newton Difference Interpolation Derivative
+// vector<long double> third_derivative(vector<long double> &u){
+//     vector<long double> u_der(u.size(), 0);
+//     // First Derivative 
+//     for (int i = first_cell; i <= last_cell; i++)
+//         u_der[i] = derivative(u, i);
+//     u_der[Nx - 1] = 1;
 
-    // Second Derivative 
-    for (int i = first_cell; i <= last_cell; i++)
-        u_der[i] = derivative(u_der, i);
-    u_der[Nx - 1] = 0;
+//     // Second Derivative 
+//     for (int i = first_cell; i <= last_cell; i++)
+//         u_der[i] = derivative(u_der, i);
+//     u_der[Nx - 1] = 0;
 
-    // Third Derivative 
-    for (int i = first_cell; i = last_cell; i++)
-        u_der[i] = derivative(u_der, i);
-    u_der[Nx - 1] = -1;
+//     // Third Derivative 
+//     for (int i = first_cell; i = last_cell; i++)
+//         u_der[i] = derivative(u_der, i);
+//     u_der[Nx - 1] = -1;
 
-    return u_der;
-}
+//     return u_der;
+// }
 
-/// @brief ANOTHER Newton Difference Interpolation Method for Derivative
-long double derivative2(vector<long double> &u, int x_index, int count, long double u_x) {
-    // Base case when del^n_y = 0 or only 1 differnce 
-    if (u.size()<=1 || u[1]-u[0] == 0){
-        u_x /= (dx);
-        return u_x; 
-    }
+// /// @brief ANOTHER Newton Difference Interpolation Method for Derivative
+// long double derivative2(vector<long double> &u, int x_index, int count, long double u_x) {
+//     // Base case when del^n_y = 0 or only 1 differnce 
+//     if (u.size()<=1 || u[1]-u[0] == 0){
+//         u_x /= (dx);
+//         return u_x; 
+//     }
 
-    vector<long double> del_u(u.size() - x_index- 1, 0);
-    if(x_index <= 250){
-    // Calculate FORWARD differnce del^n_u
-        for (int i = x_index; i < u.size() - 1; i++) {
-            del_u[i-x_index] = u[i + 1] - u[i];
+//     vector<long double> del_u(u.size() - x_index- 1, 0);
+//     if(x_index <= 250){
+//     // Calculate FORWARD differnce del^n_u
+//         for (int i = x_index; i < u.size() - 1; i++) {
+//             del_u[i-x_index] = u[i + 1] - u[i];
 
-        } u_x += pow(-1, count++) * (1.0/count) * del_u[0];
-    }
+//         } u_x += pow(-1, count++) * (1.0/count) * del_u[0];
+//     }
     
-    // Calculate BACKWARD Difference
-    else if(x_index >= 750){
-        for (int i = x_index; i < u.size() - 1; i++) {
-            del_u[i-x_index] = u[i] - u[i+1];
+//     // Calculate BACKWARD Difference
+//     else if(x_index >= 750){
+//         for (int i = x_index; i < u.size() - 1; i++) {
+//             del_u[i-x_index] = u[i] - u[i+1];
 
-        } u_x += pow(-1, count++) * (1.0/count) * del_u[0];
-    }
+//         } u_x += pow(-1, count++) * (1.0/count) * del_u[0];
+//     }
 
-    // Calculate Stirling Interpolation (somewhat)
-    else return ((u[x_index+1] - u[x_index-1])) / (2*dx);
+//     // Calculate Stirling Interpolation (somewhat)
+//     else return ((u[x_index+1] - u[x_index-1])) / (2*dx);
 
-    return derivative2(del_u, 0, count, u_x); // Recursive call to caculate forward difference of del^n_u
+//     return derivative2(del_u, 0, count, u_x); // Recursive call to caculate forward difference of del^n_u
 
-}
+// }
 
 // U_xxx Discretization 1: (u^n_j - 3u^n_j-1 + 3u^n_j-2 - u^n_j-3) / dx^3
 // long double u_xxx = (u_n[j] - 3.0*u_n[j-1] + 3.0*u_n[j-2] - u_n[j-3]) / (dx*dx*dx);
