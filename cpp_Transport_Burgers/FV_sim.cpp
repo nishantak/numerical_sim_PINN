@@ -161,7 +161,8 @@ void u_ex(int condition){
 
                 default: break;
         }
-        break;
+           
+            break;
         
         default: break;
 
