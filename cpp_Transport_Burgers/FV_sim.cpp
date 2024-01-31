@@ -113,7 +113,6 @@ void simulate(vector<long double> &u_n, int flux_scheme, int boundary_condition)
     } write_data(fin_file, u_n, 1, Nx-2); // Write Simulation Data for FINAL time step
 
 out_file.close(); fin_file.close();
-
 }
 
 
