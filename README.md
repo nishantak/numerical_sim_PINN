@@ -12,5 +12,6 @@ Finite Volume Numerical analysis scheme <br><br>
 ```bash
 cd [YOUR_WORKING_DIRECTORY]
 g++ simulate.cpp FV_sim.cpp -o simulate && ./simulate
+'''bash
 
 # Steps to run Kuramoto Python Code: -
