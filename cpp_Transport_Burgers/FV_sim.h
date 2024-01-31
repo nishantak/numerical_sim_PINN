@@ -35,7 +35,7 @@ void get_param();
 void plot();
 void write_data(ofstream &filename, vector<long double> u, int first_cell, int last_cell);
 long double calculate_tv(vector<long double> u);
-//Unused functions
+// Unused functions
 // vector<long double> third_derivative(vector<long double> &);
 // long double derivative2(vector<long double> &u, int x_index, int count, long double u_x) 
 // long double derivative(vector<long double>&, int);
