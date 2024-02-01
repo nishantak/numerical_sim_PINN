@@ -7,17 +7,10 @@ Finite Volume Numerical analysis scheme <br>
 1. Python
 2. C++ 
 2. matplotlib
-
-```bash
-pip install matplotlib
-```
 3. NumPy
-```bash
-pip install numpy
-```
 4. SciPy
 ```bash
-pip install SciPy
+pip install matplotlib numpy scipy
 ```
 
 ## Transport_Burgers CPP Code: -
