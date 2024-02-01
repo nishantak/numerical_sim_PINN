@@ -24,7 +24,7 @@ def plot():
         plt.clf()
         plt.title(f'FVM Simulation after Time Step {t}')
 
-        # Exact Soltuion | Will give error if ex_data file is not according to initial data; in such case comment it
+        # Exact Soltuion
         if ex_data_exists:
             plt.plot(x, ex_data, linestyle=":", marker="o", markersize=1, markerfacecolor='none', label='Exact Solution') 
         
