@@ -162,10 +162,6 @@ void u_ex(int condition){
                     break;
 
                 // To be implemented for Burger's Exact Solution
-                case 3: // KdV stuff (nvm)
-                    for(int j=first_cell; j<=last_cell; j++)
-                        ex_file << 0.25 * (pow(1.0/cosh(sqrt(0.5)/2.0 * (xmin + (j+0.5)*dx - 2.5) - 7.0), 2)) << " ";
-                    break;
 
                 default: break;
             }
