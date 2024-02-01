@@ -9,12 +9,12 @@ Make sure you have the *dependencies* installed and follow the steps for the cod
 2. C++ (and add to PATH)
 2. matplotlib
 3. NumPy
-4. SciPy
+4. SciPy (for kuramoto)
 ```bash
 pip install matplotlib numpy scipy
 ```
 
-## Transport_Burgers CPP Code: -
+## Transport_Burgers C++ Code: -
 ***FV_sim.h*** and ***FV_sim.cpp*** constitute A CUSTOM NUMERICAL ANALYSIS LIBRARY that contains _all the numerical analysis functions and scheme implementations._   
   1. Clone / Download this git repository into your _working directory_; <br><br> OR <br><br> Download the _**simulate.cpp, FV_sim.h, FV_sim.cpp, and matplot.py**_  files into a (same) directory;
     
