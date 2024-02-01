@@ -26,7 +26,7 @@ int Nt = (int)(Tf/dt);  // No. of time steps
 int first_cell = 1, last_cell = Nx-2;   // j domain Limits
 
 
-// Returns Flux
+// Returns Flux, f(u)
 float a;  // Constant Flux Multiplier
 long double flux(long double u){
     switch (equation){
