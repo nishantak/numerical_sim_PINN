@@ -52,12 +52,12 @@ void initialise(vector<long double> &u, int condition){
                 cout << "0.25 * (sech(sqrt(0.5)/2 * x -7))^2" << endl << endl;
                 
                 for(int j=0; j<Nx; j++)
-                    u[j] = 0.25 * (pow(1.0/cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx) - 7), 2));
+                    u[j] = 0.25 * (pow(1.0 / cosh(sqrt(0.5)/2 * (xmin + (j+0.5)*dx) - 7), 2));
                 
                 break;
 
             default: break;
-    } u_ex(condition); // Compute exact solution based on initial condition
+    } u_ex(condition); // Compute exact solution based on initial condition and problem statement
 }
 
 
@@ -110,7 +110,7 @@ void simulate(vector<long double> &u_n, int flux_scheme, int boundary_condition)
 
         t+=dt;
 
-    } write_data(fin_file, u_n, 1, Nx-2); // Write Simulation Data for FINAL time step
+    } write_data(fin_file, u_n, first_cell, last_cell); // Write Simulation Data for FINAL time step
 
 out_file.close(); fin_file.close();
 }
@@ -132,6 +132,7 @@ long double calculate_tv(vector<long double> u) {
 void u_ex(int condition){
     ofstream ex_file("uex.txt"); // Exact Solution data dump file
     switch(equation){
+        // Transport equation
         case 1:
             switch (condition){
                 case 1:
@@ -147,17 +148,19 @@ void u_ex(int condition){
                     } 
                     break;
 
-                // case 3: // KdV stuff (nvm)
-                //     for(int j=first_cell; j<=last_cell; j++)
-                //         ex_file << 0.25 * (pow(1.0/cosh(sqrt(0.5)/2.0 * (xmin + (j+0.5)*dx - 2.5) - 7.0), 2)) << " ";
-                //     break;
-
                 default: break;
             }
             break;
 
+        // Burger's equation
         case 2:
             switch (condition){
+                // KdV stuff (nvm)
+                case 3: 
+                    for(int j=first_cell; j<=last_cell; j++)
+                        ex_file << 0.25 * (pow(1.0/cosh(sqrt(0.5)/2.0 * (xmin + (j+0.5)*dx - 2.5) - 7.0), 2)) << " ";
+                    break;
+
                 // To be implemented for Burger's Exact Solution
                 default: break;
         }
@@ -180,7 +183,7 @@ void plot(){
 }
 
 
-/// @brief write data to file using file stream
+/// @brief write data to file
 void write_data(ofstream& filename, vector<long double> u, int start, int end){
     filename.precision(8);
     for(int i=start; i<=end; i++)
@@ -200,6 +203,17 @@ void get_param(){
     cout << "Final Time (Tf): " << Tf << endl;
     cout << "Time Step (dt): " << dt << endl;
     cout << "Number of Time Steps (Nt): " << Nt << endl << endl;
+    
+    switch (equation){
+        case 1:
+            cout << "Transport Equation" << endl << "Flux = a*u, " << a << endl << endl;
+            break;
+        
+        case 2:
+            cout << "Burger's Equations" << endl << "Flux = u^2 / 2" << endl << endl;
+        
+        default: break;
+    } 
 }
 
 
