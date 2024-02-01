@@ -1,4 +1,3 @@
-import scipy as sp
 import matplotlib.pyplot as plt
 import os
 from config import *
