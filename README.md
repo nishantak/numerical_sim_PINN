@@ -5,8 +5,8 @@ Finite Volume Numerical analysis scheme <br>
 Make sure you have the *dependencies* installed and follow the steps for the code which you want to run / problem which you want to simulate. 
 <br><br> (All shell commands are according to a windows environment)
 ## Dependencies: -
-1. Python
-2. C++ 
+1. Python (and add to PATH)
+2. C++ (and add to PATH)
 2. matplotlib
 3. NumPy
 4. SciPy
