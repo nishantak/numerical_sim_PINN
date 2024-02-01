@@ -47,7 +47,7 @@ void initialise(vector<long double> &u, int condition){
                 
                 break;
             
-            // U_0(x_j) = 0.25 * ( sech(sqrt(0.5)/2 * x -7) )^2 
+            // U_0(x_j) = 0.25 * ( sech(sqrt(0.5)/2 * x -7) )^2  |  KdV stuff (nvm)
             case 3: 
                 cout << "0.25 * (sech(sqrt(0.5)/2 * x -7))^2" << endl << endl;
                 
@@ -89,7 +89,7 @@ void simulate(vector<long double> &u_n, int flux_scheme, int boundary_condition)
         
         }
 
-        //Boundary conditions
+        // Boundary conditions
         switch(boundary_condition){
             case 2:
                 u_n_plus1[Nx-1] = u_n_plus1[Nx-2]; // RIGHT Boundary
@@ -162,9 +162,14 @@ void u_ex(int condition){
                     break;
 
                 // To be implemented for Burger's Exact Solution
+                case 3: // KdV stuff (nvm)
+                    for(int j=first_cell; j<=last_cell; j++)
+                        ex_file << 0.25 * (pow(1.0/cosh(sqrt(0.5)/2.0 * (xmin + (j+0.5)*dx - 2.5) - 7.0), 2)) << " ";
+                    break;
+
                 default: break;
-        }
-        break;
+            }
+            break;
         
         default: break;
 
