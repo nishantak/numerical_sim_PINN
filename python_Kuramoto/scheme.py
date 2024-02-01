@@ -1,3 +1,4 @@
+import scipy as sp
 from functions import *
 
 
