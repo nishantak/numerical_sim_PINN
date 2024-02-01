@@ -27,7 +27,7 @@ first_cell, last_cell = 1, Nx - 2  # j domain Limits
 # Returns flux, f(u)
 a = 1.0  # Constant Flux Multiplier
 def flux(u):
-        if equation == 1:
-            return a * u
-        elif equation == 2:
-            return 0.5 * u * u
+    if equation == 1:
+        return a * u
+    elif equation == 2:
+        return 0.5 * u * u
