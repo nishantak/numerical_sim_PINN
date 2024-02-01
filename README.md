@@ -3,7 +3,7 @@ Finite Volume Numerical analysis scheme <br>
 
 # Steps to run
 Make sure you have the *dependencies* installed and follow the steps for the code which you want to run / problem which you want to simulate. 
-<br> (All shell commands are according to a windows environment)
+<br><br> (All shell commands are according to a windows environment)
 ## Dependencies: -
 1. Python
 2. C++ 
