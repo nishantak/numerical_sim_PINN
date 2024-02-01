@@ -1,8 +1,8 @@
 # Numerical Simulation
 Finite Volume Numerical analysis scheme <br>
 
-# Steps to run: -
-
+# Steps to run
+<br>
 ## Dependencies: -
 1. Python
 2. C++ 
