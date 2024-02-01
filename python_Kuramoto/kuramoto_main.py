@@ -1,6 +1,5 @@
 from scheme import *
 from config import *
-from functions import *
 
 U = np.zeros(Nx)  # U(x);
 
