@@ -11,7 +11,7 @@ def num_flux(u, x_index, V, dt):
     return 0.5 * (flux(u, x_index, V) + flux(u, x_index+1, V)) - ((0.5 / (dt/dx)) * (u[x_index+1] - u[x_index]))
 
 
-# initialise with initial condition
+# Initial condition
 def initialise(u, condition):
 
     print("Initial Condition: U_0(x_j) = ")
@@ -33,7 +33,7 @@ def initialise(u, condition):
     u_ex(condition) # Compute exact solution based on initial condition and problem statement
 
 
-# Simulating the time stepping of PDE using Finite Volumse Method and Flux Scheme
+# Simulating the time stepping of PDE using Finite Volume Method and Flux Scheme
 def simulate(u_n):
     # Output dump files
     out_file = open("simulation_data.txt", "w")
