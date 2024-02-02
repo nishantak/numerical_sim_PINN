@@ -23,7 +23,7 @@ def plot():
         plt.clf()
         plt.title(f'FVM Simulation after Time Step {t}')
 
-        # Exact Soltuion
+        # Exact Solution
         if ex_data_exists:
             plt.plot(x, ex_data, linestyle=":", marker="o", markersize=1, markerfacecolor='none', label='Exact Solution') 
         
@@ -50,7 +50,7 @@ def get_param():
     print("Number of Spatial Points (Nx):", Nx - ghost_cells)
     print("Cell Width (dx):", dx, "\n")
     print("Stability Parameter (CFL Number):", cfl, "\n")
-    print("Omega, Coupling Stength:", om, ", ", K, "\n")
+    print("Omega, Coupling Strength:", om, ", ", K, "\n")
     print("Final Time (Tf):", Tf, "\n")
     
 
