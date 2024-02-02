@@ -4,30 +4,28 @@ import numpy as np
     Config file to set Simulation Parameters
 '''
 
-equation = 2  # Problem Statement
+equation = 1  # Problem Statement
 
-xmin, xmax = -2*np.pi, 2*np.pi  # Domain limits
+xmin, xmax = 0, 2*np.pi  # Domain limits
 L = abs(xmax - xmin)  # Domain Length
-ghost_cells = 2  # Number of ghost cells
-Nx = 1000 + ghost_cells  # Number of spatial points
+ghost_cells = 1  # Number of ghost cells
+Nx = 512 + ghost_cells  # Number of spatial points
 dx = L / (Nx-1)  # Cell width
 # dx = 0.01 # Cell width
 # Nx = int(L/dx) + 1 + ghost_cells # Number of spatial points
+x = np.linspace(xmin + dx/2, xmax - dx/2, Nx)   # Spatial grid
 
-cfl = 0.75  # Stability Parameter - CFL Number
-c = 1.0  # Wave Velocity
+cfl = 0.35  # Stability Parameter - CFL Number
 
-dt = cfl * dx / c  # Time step
-Tf = 2.0  # Final time / Total Time
-Nt = int(Tf / dt)  # No. of time steps
+Tf = 1.0  # Final time / Total Time
 
-first_cell, last_cell = 1, Nx-2  # j domain Limits
+first_cell, last_cell = 1, Nx-1  # j domain Limits
+
+om = 0 # Natural Frequency
+K = 1 # Coupling Strength
+
+# Returns Non-local flux, f(u) = L[rho]rho
+def flux(u, x_index, V_U):
+    return K*V_U[x_index] * u[x_index]
 
 
-# Returns flux, f(u)
-a = 1.0  # Constant Flux Multiplier
-def flux(u):
-    if equation == 1:
-        return a*u
-    elif equation == 2:
-        return 0.5*u*u

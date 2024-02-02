@@ -32,7 +32,7 @@ def plot():
         
         plt.legend()
         plt.draw()
-        plt.pause(0.05)
+        plt.pause(0.08)
 
     plt.show()
 
@@ -44,13 +44,14 @@ def write_data(filename, u, start, end):
 
 # Print Simulation Parameters
 def get_param():
-    print("\nDomain Limits (xmin, xmax):", xmin, ", ", xmax)
+    print("\nIdentical Kuramoto Equation\n") if equation==1 else print("\nNON-Identical Kuramoto Equation\n")
+    print("Domain Limits (xmin, xmax):", xmin, ", ", xmax)
     print("Domain Length (L):", L)
     print("Number of Spatial Points (Nx):", Nx - ghost_cells)
     print("Cell Width (dx):", dx, "\n")
     print("Stability Parameter (CFL Number):", cfl, "\n")
-    print("Wave Velocity (c):", c, "\n")
-    print("Final Time (Tf):", Tf)
-    print("Time Step (dt):", dt)
-    print("Number of Time Steps (Nt):", Nt, "\n")
+    print("Omega, Coupling Stength:", om, ", ", K, "\n")
+    print("Final Time (Tf):", Tf, "\n")
+    
+
 

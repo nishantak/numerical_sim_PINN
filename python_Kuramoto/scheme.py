@@ -1,15 +1,14 @@
-import scipy as sp
+from scipy.fft import fft, ifft
 from functions import *
-
 
 '''
     Finite Volume Solver for Kuramoto Equation
 '''
 
-
 # Returns Lax-Friedrich Numerical Flux 
-def num_flux(u, u_next):
-    return 0.5 * (flux(u) + flux(u_next)) - ((0.5 / (dt/dx)) * (u_next-u))
+def num_flux(u, x_index, V, dt):
+    if x_index == Nx-1: x_index = 0 # Right Boundary
+    return 0.5 * (flux(u, x_index, V) + flux(u, x_index+1, V)) - ((0.5 / (dt/dx)) * (u[x_index+1] - u[x_index]))
 
 
 # initialise with initial condition
@@ -19,30 +18,23 @@ def initialise(u, condition):
 
     # U_0(x_j) = sin(x_j+1/2)
     if condition == 1:
-        print("sin(x_j+1/2)")
-
+        print("(1/4)*((x == (3*np.pi)/4) & (x == (5*np.pi)/4)) + (1/(2*np.pi)) * ((x >= np.pi/2) & (x < (3 * np.pi)/2)) * np.pi")
         for j in range(Nx):
-            u[j] = np.sin(xmin + (j+0.5)*dx)
+            u[j] = 0.25*((x[j]>3*np.pi/4.0) & (x[j]<5*np.pi/4.0)) + 0.5*((x[j]>=np.pi/2.0) & (x[j]<3*np.pi/2.0))
 
-    # Discrete initial data, x_i > 0 ? 0 : 1
+    # Something
     elif condition == 2:
-        print("x_i > 0 ? 0 : 1")
-
-        for j in range(Nx):
-            u[j] = 0 if xmin + (j+0.5)*dx > 0 else 1
-
-    # U_0(x_j) = 0.25 * ( sech(sqrt(0.5)/2 * x -7) )^2 
+        pass
+    
+    # Rarefraction
     elif condition == 3:
-        print("0.25 * ( sech(sqrt(0.5)/2 * x -7) )^2 ")
-
-        for j in range(Nx):
-            u[j] = 0.25 * (1.0 / np.cosh(np.sqrt(0.5) / 2 * (xmin + (j+0.5)*dx) - 7))**2
+       pass 
 
     u_ex(condition) # Compute exact solution based on initial condition and problem statement
 
 
-# Simulating the time stepping of PDE using Finite Volume Method and Flux Scheme
-def simulate(u_n, boundary_condition):
+# Simulating the time stepping of PDE using Finite Volumse Method and Flux Scheme
+def simulate(u_n):
     # Output dump files
     out_file = open("simulation_data.txt", "w")
     fin_file = open("U_final.txt", "w")
@@ -55,32 +47,32 @@ def simulate(u_n, boundary_condition):
 
     # Time stepping loop
     while t < Tf:
+
+        u_n_plus1 = np.copy(u_n)  # Next Time Step, U^n+1_j | initialised with copy of current time step data, U^n_j
         
-        u_n_plus1 = np.copy(u_n)  # Next Time Step, U^n+1_j, initialised with U^n_j
+        # Convolution term, V[mu^n]_j
+        V_U = np.real(ifft(fft(np.sin(x)) * fft(u_n))) * dx
+        
+        # Setting time step
+        dt = cfl * dx / max(abs(V_U))
+        if(t+dt > Tf): dt = Tf-t
 
         for j in range(first_cell, last_cell+1):
             
             # Numerical Flux
-            F_j_plus_half = num_flux(u_n[j], u_n[j+1])
-            F_j_min_half = num_flux(u_n[j-1], u_n[j])
+            F_j_plus_half = num_flux(u_n, j, V_U, dt)
+            F_j_min_half = num_flux(u_n, j-1, V_U, dt)
 
             # Update using Numerical Scheme
             u_n_plus1[j] -= (dt/dx) * (F_j_plus_half - F_j_min_half)
 
-        # Boundary Conditions
-        if boundary_condition == 2:
-            u_n_plus1[Nx - 1] = u_n_plus1[Nx - 2]  # RIGHT Boundary
-            u_n_plus1[0] = u_n_plus1[1]  # LEFT Boundary
-        else:
-            u_n_plus1[Nx - 1] = u_n_plus1[Nx - 2]
-            u_n_plus1[0] = u_n_plus1[Nx - 1]
+        u_n_plus1[0] = u_n_plus1[Nx-1]  # LEFT Boundary
 
         # Store u^n+1_j in u^n_j for next time step
         u_n = u_n_plus1
 
         write_data(out_file, u_n, first_cell, last_cell)  # Write Simulation Data for THIS time step
         # write_data(debug_file, u_n, 0, Nx-1)
-
         t += dt
 
     write_data(fin_file, u_n, first_cell, last_cell)  # Write Simulation Data for FINAL time step
@@ -90,32 +82,21 @@ def simulate(u_n, boundary_condition):
 # Calculates the TV bound
 def calculate_tv(u):
     tv_norm = 0.0
-    for j in range(first_cell, last_cell + 1):
-        tv_norm += abs(u[j] - u[j - 1])
+    for j in range(first_cell, last_cell):
+        tv_norm += abs(u[j] - u[j-1])
     
     return tv_norm
 
 
 # Calculates exact Solution
 def u_ex(condition):
-    
     ex_file = open("uex.txt", "w")  # Exact Solution data dump file
-    # Transport equation
+    # Identical Natural Frequencies
     if equation == 1:
-        if condition == 1:
-            # Writing exact solution to file
-            for j in range(first_cell, last_cell + 1):
-                ex_file.write(str(np.sin(xmin + (j+0.5)*dx - a*Tf)) + " ")
-
-        elif condition == 2:
-            for j in range(first_cell, last_cell + 1):
-                u = 0 if xmin + (j+0.5)*dx - a*Tf > 0 else 1
-                ex_file.write(str(u) + " ")
-    
-    # Burger's Equation
+        pass
+    # Non-Identical Natural Frequencies
     if equation == 2:
-        if condition == 3:
-            pass
+        pass
 
     ex_file.close()
 
