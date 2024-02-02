@@ -54,7 +54,7 @@ def simulate(u_n, boundary_condition):
 
     # Time stepping loop
     while t < Tf:
-
+        
         u_n_plus1 = np.copy(u_n)  # Next Time Step, U^n+1_j, initialised with U^n_j
 
         for j in range(first_cell, last_cell+1):

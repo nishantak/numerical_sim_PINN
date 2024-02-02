@@ -10,9 +10,9 @@ xmin, xmax = -2 * np.pi, 2 * np.pi  # Domain limits
 L = abs(xmax - xmin)  # Domain Length
 ghost_cells = 2  # Number of ghost cells
 Nx = 1000 + ghost_cells  # Number of spatial points
-dx = L / (Nx - 1)  # Cell width
+dx = L / (Nx-1)  # Cell width
 # dx = 0.01 # Cell width
-# Nx = L/dx + ghost_cells # Number of spatial points
+# Nx = L/dx + 1 + ghost_cells # Number of spatial points
 
 cfl = 0.75  # Stability Parameter - CFL Number
 c = 1.0  # Wave Velocity
