@@ -74,11 +74,12 @@ void simulate(vector<long double> &u_n, int flux_scheme, int boundary_condition)
     write_data(out_file, u_n, first_cell, last_cell); // Write initial data
     //write_data(debug_file, u_n, 0, Nx-1);
     
-    // Setting time step, dt
-    dt = cfl * dx / max(abs(u_n)); 
-
     // Time Stepping Loop
     while(t<Tf){
+
+        // Setting time step, dt
+        dt = cfl * dx / max(abs(u_n)); 
+        if (t+dt > Tf) dt = Tf-t;
 
         vector<long double> u_n_plus1(u_n); // Next Time Step, U^n+1_j, initialised with U^n_j
         for(int j=first_cell; j<=last_cell; j++){
