@@ -78,7 +78,10 @@ void simulate(vector<long double> &u_n, int flux_scheme, int boundary_condition)
     while(t<Tf){
 
         // Setting time step, dt
-        dt = cfl * dx / max(abs(u_n)); 
+        long double max_u = 0.0;
+        for (int i=0; i<Nx; ++i) max_u = max(max_u, abs(u_n[i])); 
+
+        dt = cfl * dx / max_u; 
         if (t+dt > Tf) dt = Tf-t;
 
         vector<long double> u_n_plus1(u_n); // Next Time Step, U^n+1_j, initialised with U^n_j
@@ -205,9 +208,7 @@ void get_param(){
     cout << "Cell Width (dx): " << dx << endl << endl;
     cout << "Stability Parameter (CFL Number): " << cfl << endl << endl;
     cout << "Wave Velocity (c): " << c << endl << endl;
-    cout << "Final Time (Tf): " << Tf << endl;
-    cout << "Time Step (dt): " << dt << endl;
-    cout << "Number of Time Steps (Nt): " << Nt << endl << endl;
+    cout << "Final Time (Tf): " << Tf << endl << endl;
     
     switch (equation){
         case 1:
