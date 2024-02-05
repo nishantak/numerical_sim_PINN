@@ -19,9 +19,8 @@ long double dx = L/(Nx-1);  // Cell width
 double cfl = 0.75;  // Stability Parameter - CFL Number 
 long double c = 1.0;  // Wave Velocity
 
-long double dt = cfl * dx / c;  // Time step
+long double dt;    // Time step
 double Tf = 2.0;         // Final time / Total Time
-int Nt = (int)(Tf/dt);  // No. of time steps
 
 int first_cell = 1, last_cell = Nx-2;   // j domain Limits
 
