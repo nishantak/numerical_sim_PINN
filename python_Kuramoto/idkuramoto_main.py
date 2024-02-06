@@ -1,9 +1,3 @@
-import idkuramoto as ik
-import nikuramoto as nk
-
-U = np.zeros(Nx)  # U(x);
-
-
 '''
     'equation' is a choice variable representing the equation to simulate.
     1 : idkuramoto
@@ -17,6 +11,11 @@ if(equation == 1): from idkuramoto import *
 
 # NON-Identical Natural Frequencies 
 else if(equation == 2): from nikuramoto import *
+
+
+U = np.zeros(Nx)  # U(x);
+
+get_param()
 
 '''
     initialise() function takes 2 inputs, the vector U and and an integer denoting the initial condition. 
