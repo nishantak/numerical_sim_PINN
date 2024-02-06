@@ -25,5 +25,6 @@ om = 0 # Natural Frequency
 K = 1 # Coupling Strength
 
 # Returns Non-local flux, f(u) = L[rho]rho
-def flux(u, x_index, V_U):
-    return K*V_U[x_index] * u[x_index]
+def flux(V_U, u, x_index):
+    return -K*V_U[x_index] * u[x_index]
+

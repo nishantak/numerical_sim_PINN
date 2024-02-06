@@ -6,9 +6,9 @@ from functions import *
 '''
 
 # Returns Lax-Friedrich Numerical Flux 
-def num_flux(u, x_index, V, dt):
+def num_flux(V_U, u, x_index, dt):
     if x_index == Nx-1: x_index = 0 # Right Boundary
-    return 0.5 * (flux(u, x_index, V) + flux(u, x_index+1, V)) - ((0.5 / (dt/dx)) * (u[x_index+1] - u[x_index]))
+    return 0.5 * (flux(V_U, u, x_index) + flux(V_U, u, x_index+1)) - ((0.5 / (dt/dx)) * (u[x_index+1] - u[x_index]))
 
 
 # Initial condition
@@ -52,7 +52,7 @@ def simulate(u_n):
         
         # Convolution term, V[mu^n]_j
         V_U = np.real(ifft(fft(np.sin(x)) * fft(u_n))) * dx
-        
+
         # Setting time step
         dt = cfl * dx / max(abs(V_U))
         if(t+dt > Tf): dt = Tf-t
@@ -60,8 +60,8 @@ def simulate(u_n):
         for j in range(first_cell, last_cell+1):
             
             # Numerical Flux
-            F_j_plus_half = num_flux(u_n, j, V_U, dt)
-            F_j_min_half = num_flux(u_n, j-1, V_U, dt)
+            F_j_plus_half = num_flux(V_U, u_n, j, dt)
+            F_j_min_half = num_flux(V_U, u_n, j-1, dt)
 
             # Update using Numerical Scheme
             u_n_plus1[j] -= (dt/dx) * (F_j_plus_half - F_j_min_half)

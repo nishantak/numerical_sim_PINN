@@ -15,13 +15,16 @@ def plot():
 
     # Plot
     x = np.linspace(xmin, xmax, Nx-ghost_cells)
+    
     time_steps = len(sim_data)
+    Dt = Tf / (time_steps-1)
+
     plt.xlabel('x')
     plt.ylabel('u(x)')
 
     for t in range(time_steps):
         plt.clf()
-        plt.title(f'FVM Simulation after Time Step {t}')
+        plt.title(f'FVM Simulation after Time Step {t}, t={round(t*Dt, 3)}')
 
         # Exact Solution
         if ex_data_exists:

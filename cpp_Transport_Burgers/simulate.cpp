@@ -11,12 +11,12 @@ int equation; // Problem Statement
 double xmin = -2*M_PI, xmax = 2*M_PI ;  // Domain limits
 double L = abs(xmax- xmin);   //Domain Length
 int ghost_cells = 2;    // Number of ghost cells 
-int Nx = 1000 + ghost_cells;   // Number of spatial points
+int Nx = 200 + ghost_cells;   // Number of spatial points
 long double dx = L/(Nx-1);  // Cell width 
 // long double dx = 0.2; // Cell Width
 // int Nx = (int)(L/dx) + 1 + ghost_cells; // Number of Spatial Points
 
-double cfl = 0.75;  // Stability Parameter - CFL Number 
+double cfl = 0.5;  // Stability Parameter - CFL Number 
 long double c = 1.0;  // Wave Velocity
 
 long double dt;    // Time step

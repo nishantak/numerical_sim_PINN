@@ -180,12 +180,15 @@ void u_ex(int condition){
 }
 
 
+// Functionality functions
+
 /// @brief Pass plot data to python matplotlib script and plots graph
 void plot(){
     // Set environment variables to pass to python script
     setenv("xmin", to_string(xmin).c_str(), 1);
     setenv("xmax", to_string(xmax).c_str(), 1);
     setenv("Nx", to_string(Nx - ghost_cells).c_str(), 1);
+    setenv("Tf", to_string(Tf).c_str(), 1);
     // CLI command to run python script
     system("python matplot.py");
 }
