@@ -5,7 +5,6 @@
 '''
 equation = 1
 
-
 # Identical Natural Frequencies
 if(equation == 1): from idkuramoto import *
 
