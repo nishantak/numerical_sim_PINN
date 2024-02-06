@@ -1,7 +1,9 @@
 '''
     'equation' is a choice variable denoting the equation to simulate.
-    1 : idkuramoto
-    2 : nikuramoto
+        
+        1 : idkuramoto
+
+        2 : nikuramoto
 '''
 equation = 1
 
