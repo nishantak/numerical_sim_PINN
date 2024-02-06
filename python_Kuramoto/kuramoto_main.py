@@ -11,7 +11,7 @@ equation = 1
 if(equation == 1): from idkuramoto import * 
     
 # NON-Identical Natural Frequencies 
-else if(equation == 2): from nikuramoto import *
+elif(equation == 2): from nikuramoto import *
 
 
 U = np.zeros(Nx)  # U(x);
