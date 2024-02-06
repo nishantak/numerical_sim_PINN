@@ -8,8 +8,8 @@
 equation = 1
 
 # Identical Natural Frequencies
-if(equation == 1): from idkuramoto import *
-
+if(equation == 1): from idkuramoto import * 
+    
 # NON-Identical Natural Frequencies 
 else if(equation == 2): from nikuramoto import *
 
