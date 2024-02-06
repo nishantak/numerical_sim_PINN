@@ -19,8 +19,10 @@ Tf = 1.0  # Final time / Total Time
 
 first_cell, last_cell = 1, Nx-1  # j domain Limits
 
+
 om = 0 # Natural Frequency
 K = 1 # Coupling Strength
+
 
 # Returns Non-local flux, f(u) = L[rho]rho
 def flux(V_U, u, x_index):
