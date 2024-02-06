@@ -36,7 +36,6 @@ get_param()
 initialise(U, 1)
 simulate(U)
 
-
 print("Total Variation:", calculate_tv(U), "\n")
 
 plot()
