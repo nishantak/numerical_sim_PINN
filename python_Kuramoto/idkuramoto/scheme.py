@@ -1,5 +1,5 @@
 from scipy.fft import fft, ifft
-from functions import *
+from .functions import *
 
 '''
     Finite Volume Solver for Kuramoto Equation with IDENTICAL natural fruequencies

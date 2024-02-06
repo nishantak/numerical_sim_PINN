@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import os
 from .config import *
 
 
@@ -47,7 +46,7 @@ def write_data(filename, u, start, end):
 
 # Print Simulation Parameters
 def get_param():
-    print("\nIdentical Kuramoto Equation\n")
+    print("\nNon Identical Kuramoto Equation\n")
     print("Domain Limits (xmin, xmax):", xmin, ", ", xmax)
     print("Domain Length (L):", L)
     print("Number of Spatial Points (Nx):", Nx - ghost_cells)
