@@ -26,7 +26,7 @@ g++ simulate.cpp FV_sim.cpp -o simulate && ./simulate
 ```
 
 ## Kuramoto Python Code: -
-In each **respective directory,** ***scheme.py*** is the module that contains _the numerical analysis scheme implementation._ ***functions.py*** is the module that contains functionality functions *(plot, write_data, and get_param)* 
+In **each directory**, ***scheme.py*** is the module that contains _the respective numerical analysis scheme implementation._ ***functions.py*** is the module that contains functionality functions *(plot, write_data, and get_param)* 
 <br><br> **config.py** contains all simulation parameters and the flux definition (f(u)). Changes can be made there as per simulation need.
   1. Clone / Download this git repository into your _working directory_ ; <br><br> OR <br><br> Download the _**idkuramoto directory, nikuramoto directory, and kuramoto_main.py file**_ into a (same) directory;
     
