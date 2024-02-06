@@ -2,7 +2,7 @@ from scipy.fft import fft, ifft
 from functions import *
 
 '''
-    Finite Volume Solver for Kuramoto Equation
+    Finite Volume Solver for Kuramoto Equation with IDENTICAL natural fruequencies
 '''
 
 # Returns Lax-Friedrich Numerical Flux 
@@ -16,17 +16,17 @@ def initialise(u, condition):
 
     print("Initial Condition: U_0(x_j) = ")
 
-    # U_0(x_j) = sin(x_j+1/2)
+    # U_0(x_j) = 1/4 * ((x_j >= 3*pi/4) && (x_j <= 5*pi/4)) + 1/2 * ((x_j >= pi/2) && (x_j <= 3*pi/2)
     if condition == 1:
-        print("(1/4)*((x == (3*np.pi)/4) & (x == (5*np.pi)/4)) + (1/(2*np.pi)) * ((x >= np.pi/2) & (x < (3 * np.pi)/2)) * np.pi")
+        print("1/4 * ((x_j >= 3*pi/4) && (x_j <= 5*pi/4)) + 1/2 * ((x_j >= pi/2) && (x_j <= 3*pi/2)")
         for j in range(Nx):
-            u[j] = 0.25*((x[j]>3*np.pi/4.0) & (x[j]<5*np.pi/4.0)) + 0.5*((x[j]>=np.pi/2.0) & (x[j]<3*np.pi/2.0))
+            u[j] = 0.25*((x[j]>=3*np.pi/4.0) & (x[j]<=5*np.pi/4.0)) + 0.5*((x[j]>=np.pi/2.0) & (x[j]<=3*np.pi/2.0))
 
     # Something
     elif condition == 2:
         pass
     
-    # Rarefraction
+    # Something 2
     elif condition == 3:
        pass 
 
@@ -91,12 +91,6 @@ def calculate_tv(u):
 # Calculates exact Solution
 def u_ex(condition):
     ex_file = open("uex.txt", "w")  # Exact Solution data dump file
-    # Identical Natural Frequencies
-    if equation == 1:
-        pass
-    # Non-Identical Natural Frequencies
-    if equation == 2:
-        pass
 
     ex_file.close()
 

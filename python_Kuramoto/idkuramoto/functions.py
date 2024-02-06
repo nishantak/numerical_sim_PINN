@@ -47,7 +47,7 @@ def write_data(filename, u, start, end):
 
 # Print Simulation Parameters
 def get_param():
-    print("\nIdentical Kuramoto Equation\n") if equation==1 else print("\nNON-Identical Kuramoto Equation\n")
+    print("\nIdentical Kuramoto Equation\n")
     print("Domain Limits (xmin, xmax):", xmin, ", ", xmax)
     print("Domain Length (L):", L)
     print("Number of Spatial Points (Nx):", Nx - ghost_cells)

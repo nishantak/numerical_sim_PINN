@@ -4,8 +4,6 @@ import numpy as np
     Config file to set Simulation Parameters
 '''
 
-equation = 1  # Problem Statement
-
 xmin, xmax = 0, 2*np.pi  # Domain limits
 L = abs(xmax - xmin)  # Domain Length
 ghost_cells = 1  # Number of ghost cells
