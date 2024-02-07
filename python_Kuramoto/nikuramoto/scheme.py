@@ -7,7 +7,7 @@ from .functions import *
 
 # Returns Lax-Friedrich Numerical Flux 
 def num_flux(V_U, u, x_index, dt):
-    if x_index == Nx-1: x_index = 0 # Right Boundary
+    if x_index == Nx-1: x_index = 0 # Right Boundary, F^n_Nx-1/2 = F^n_1/2
     return 0.5 * (flux(V_U, u, x_index) + flux(V_U, u, x_index+1)) - ((0.5 / (dt/dx)) * (u[x_index+1] - u[x_index]))
 
 
@@ -38,7 +38,7 @@ def simulate(u_n):
 # Calculates the TV bound
 def calculate_tv(u):
     tv_norm = 0.0
-    for j in range(first_cell, last_cell):
+    for j in range(first_cell+1, last_cell+1):
         tv_norm += abs(u[j] - u[j-1])
     
     return tv_norm

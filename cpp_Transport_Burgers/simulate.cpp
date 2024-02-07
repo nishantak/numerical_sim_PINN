@@ -10,7 +10,7 @@ int equation; // Problem Statement
 
 double xmin = -2*M_PI, xmax = 2*M_PI ;  // Domain limits
 double L = abs(xmax- xmin);   //Domain Length
-int ghost_cells = 2;    // Number of ghost cells 
+int ghost_cells = 0;    // Number of ghost cells 
 int Nx = 200 + ghost_cells;   // Number of spatial points
 long double dx = L/(Nx-1);  // Cell width 
 // long double dx = 0.2; // Cell Width
@@ -22,7 +22,7 @@ long double c = 1.0;  // Wave Velocity
 long double dt;    // Time step
 double Tf = 2.0;         // Final time / Total Time
 
-int first_cell = 1, last_cell = Nx-2;   // j domain Limits
+int first_cell = 0, last_cell = Nx-1;   // j domain Limits
 
 
 // Returns Flux, f(u)

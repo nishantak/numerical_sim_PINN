@@ -4,7 +4,7 @@
         1 : idkuramoto
 
         2 : nikuramoto
-'''
+''' 
 equation = 1
 
 # Identical Natural Frequencies
@@ -27,8 +27,8 @@ get_param()
         
         2 : Something
 
-
-     For NIkuramoto the Initial Conditions are as follows: -
+        
+    For NIkuramoto the Initial Conditions are as follows: -
 
         1 : Something 
 
@@ -36,7 +36,7 @@ get_param()
 initialise(U, 1)
 simulate(U)
 
-print("Total Variation:", calculate_tv(U), "\n")
+print("\nTotal Variation:", calculate_tv(U), "\n")
 
 plot()
 

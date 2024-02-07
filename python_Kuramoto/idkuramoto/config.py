@@ -6,7 +6,7 @@ import numpy as np
 
 xmin, xmax = 0, 2*np.pi  # Domain limits
 L = abs(xmax - xmin)  # Domain Length
-ghost_cells = 1  # Number of ghost cells
+ghost_cells = 0  # Number of ghost cells
 Nx = 512 + ghost_cells  # Number of spatial points
 dx = L / (Nx-1)  # Cell width
 # dx = 0.01 # Cell width
@@ -17,7 +17,7 @@ cfl = 0.35  # Stability Parameter - CFL Number
 
 Tf = 1.0  # Final time / Total Time
 
-first_cell, last_cell = 1, Nx-1  # j domain Limits
+first_cell, last_cell = 0, Nx-1  # j domain Limits
 
 
 om = 0 # Natural Frequency

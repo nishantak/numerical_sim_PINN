@@ -126,7 +126,7 @@ out_file.close(); fin_file.close();
 /// @brief Calculates the TV bound
 long double calculate_tv(vector<long double> u) {
     double tv_norm = 0.0;
-    for (int j = first_cell; j <= last_cell + 1; j++) {
+    for (int j = first_cell+1; j <= last_cell; j++) {
         tv_norm += abs(u[j] - u[j - 1]);
     }
     
