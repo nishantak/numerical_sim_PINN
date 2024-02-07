@@ -8,13 +8,15 @@
 equation = 1
 
 # Identical Natural Frequencies
-if(equation == 1): from idkuramoto import * 
+if(equation == 1): 
+    from idkuramoto import * 
+    U = np.zeros(Nx)  # U(x);
     
 # NON-Identical Natural Frequencies 
-elif(equation == 2): from nikuramoto import *
+elif(equation == 2): 
+    from nikuramoto import *
+    U = np.zeros(Ny, Nx)  # U(y, x);
 
-
-U = np.zeros(Nx)  # U(x);
 
 get_param()
 
