@@ -14,7 +14,7 @@ def plot():
         ex_data_exists = 1
 
     # Plot
-    x = np.linspace(xmin, xmax, Nx-ghost_cells)
+    x = np.linspace(xmin, xmax, Nx-x_ghost_cells)
     
     time_steps = len(sim_data)
     Dt = Tf / (time_steps-1)
@@ -48,10 +48,14 @@ def write_data(filename, u, start, end):
 # Print Simulation Parameters
 def get_param():
     print("\nNon Identical Kuramoto Equation\n")
-    print("Domain Limits (xmin, xmax):", xmin, ", ", xmax)
-    print("Domain Length (L):", L)
-    print("Number of Spatial Points (Nx):", Nx - ghost_cells)
+    print("X Domain Limits (xmin, xmax):", xmin, ", ", xmax)
+    print("X Domain Length (Lx):", Lx)
+    print("Number of Spatial Points (Nx):", Nx - x_ghost_cells)
     print("Cell Width (dx):", dx, "\n")
+    print("Y Domain Limits (ymin, ymax):", ymin, ", ", ymax)
+    print("Y Domain Length (Ly):", Ly)
+    print("Number of Y Points (Ny):", Ny - y_ghost_cells)
+    print("Y step (dy):", dx, "\n")
     print("Stability Parameter (CFL Number):", cfl, "\n")
     print("Omega, Coupling Strength:", om, ", ", K, "\n")
     print("Final Time (Tf):", Tf, "\n")

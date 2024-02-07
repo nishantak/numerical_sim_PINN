@@ -28,7 +28,7 @@ y = np.linspace(ymin + dy/2, ymax - dy/2, Nx+1)
 
 X, Y = np.meshgrid(x, y)
 
-midpoint = y[Ny/2]
+midpoint = y[Ny//2]
 
 
 cfl = 0.35  # Stability Parameter - CFL Number

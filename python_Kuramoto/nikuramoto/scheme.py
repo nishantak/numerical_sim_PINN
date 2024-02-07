@@ -2,7 +2,7 @@ from scipy.fft import fft, ifft
 from .functions import *
 
 '''
-    Finite Volume Solver for Kuramoto Equation with NON-IDENTICAL natural fruequencies  YET TO BE IMPLEMENTED 
+    Finite Volume Solver for Kuramoto Equation with NON-IDENTICAL oscillators  YET TO BE IMPLEMENTED 
 '''
 
 # Returns Lax-Friedrich Numerical Flux 

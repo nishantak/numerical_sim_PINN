@@ -2,7 +2,7 @@ from scipy.fft import fft, ifft
 from .functions import *
 
 '''
-    Finite Volume Solver for Kuramoto Equation with IDENTICAL natural fruequencies
+    Finite Volume Solver for Kuramoto Equation with IDENTICAL oscillators
 '''
 
 # Returns Lax-Friedrich Numerical Flux 
@@ -16,14 +16,19 @@ def initialise(u, condition):
 
     print("Initial Condition: U_0(x_j) = ")
 
-    # U_0(x_j) = 1/4 * ((x_j >= 3*pi/4) && (x_j <= 5*pi/4)) + 1/2 * ((x_j >= pi/2) && (x_j <= 3*pi/2)
+    # Singular Initial data
     if condition == 1:
         print("1/4 * ((x_j >= 3*pi/4) && (x_j <= 5*pi/4)) + 1/2 * ((x_j >= pi/2) && (x_j <= 3*pi/2)")
         for j in range(Nx):
             u[j] = 0.25*((x[j]>=3*np.pi/4.0) & (x[j]<=5*np.pi/4.0)) + 0.5*((x[j]>=np.pi/2.0) & (x[j]<=3*np.pi/2.0))
-
-    # Something
+            
+    # Polynomial Initial data
     elif condition == 2:
+        print("(6/pi^3) * (3*pi/2 - x) * (x - pi/2) , if pi/2 <= x < 3*pi/2: \n\n 0 , else")
+        for j in range(Nx):
+            if (x[j] >= np.pi/2) and (x[j] < 3*np.pi/2):
+                u[j] = (6/np.pi**3) * (3*np.pi/2 - x[j]) * (x[j] - np.pi/2)
+            else: 0
         pass
     
     # Something 2

@@ -15,7 +15,7 @@ if(equation == 1):
 # NON-Identical Natural Frequencies 
 elif(equation == 2): 
     from nikuramoto import *
-    U = np.zeros(Ny, Nx)  # U(y, x);
+    U = np.zeros((Ny, Nx))  # U(y, x);
 
 
 get_param()
@@ -35,7 +35,7 @@ get_param()
         1 : Something 
 
 '''
-initialise(U, 1)
+initialise(U, 2)
 simulate(U)
 
 print("\nTotal Variation:", calculate_tv(U), "\n")
