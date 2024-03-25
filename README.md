@@ -18,7 +18,7 @@ pip install matplotlib numpy scipy
 ```
 
 ```bash
-git clone https://github.com/nishantak/Numerical-Sim
+git clone https://github.com/nishantak/Numerical-Sim.git
 cd Numerical-Sim
 
 ```
