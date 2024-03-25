@@ -4,7 +4,7 @@ Finite Volume Numerical analysis scheme <br>
 # Steps to run
 Ensure you have the *dependencies* installed and follow the steps for the problem which you want to simulate. 
 
-<br> (All shell commands are for a windows environment)
+(All shell commands are for a windows environment)
 
 ### Dependencies: -
 1. Python (in PATH)
@@ -38,7 +38,7 @@ g++ simulate.cpp FV_sim.cpp -o simulate && ./simulate
 ## Kuramoto Python Code: -
 In **each directory**, ***scheme.py*** is the module that contains _the respective numerical analysis scheme implementation._ ***functions.py*** is the module that contains functionality functions *(plot, write_data, and get_param)* 
 
-<br>**config.py** contains all simulation parameters and the flux definition (f(u)). Changes can be made there as per simulation need.
+**config.py** contains all simulation parameters and the flux definition (f(u)). Changes can be made there as per simulation need.
 
   1. Clone this git repository
 
