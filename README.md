@@ -47,6 +47,6 @@ In **each directory**, ***scheme.py*** is the module that contains _the respecti
   2. Run the ***kuramoto_main.py*** script
 
 ```bash
-cd kuramoto
+cd python_Kuramoto
 python kuramoto_main.py
 ```
