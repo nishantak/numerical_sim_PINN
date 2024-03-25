@@ -190,7 +190,7 @@ void plot(){
     setenv("Nx", to_string(Nx - ghost_cells).c_str(), 1);
     setenv("Tf", to_string(Tf).c_str(), 1);
     // CLI command to run python script
-    system("python matplot.py");
+    system("python matplot.py");   // for windows
 }
 
 
