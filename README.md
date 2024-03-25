@@ -6,7 +6,7 @@ Ensure you have the [*dependencies*](#Dependencies) installed and follow the ste
 
 (All shell commands are for a windows environment)
 
-- [Transport_Burgers](#Transport_Burgers-CPP-Code)
+- [Transport_Burgers](#Transport_Burgers-C%2B%2B-Code)
 - [Kuramoto](#Kuramoto-Python-Code)
 
 ### Dependencies: -
@@ -25,7 +25,7 @@ git clone https://github.com/nishantak/Numerical-Sim.git
 cd Numerical-Sim
 
 ```
-## Transport_Burgers CPP Code
+## Transport_Burgers C++ Code
 ***FV_sim.h*** and ***FV_sim.cpp*** constitute A CUSTOM NUMERICAL ANALYSIS LIBRARY that contains _all the numerical analysis functions and scheme implementations._ **simulate.cpp** contains all simulation parameters and the flux definition (f(u)).
 
   1. Clone this git repository
