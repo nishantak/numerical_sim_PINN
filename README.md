@@ -2,9 +2,12 @@
 Finite Volume Numerical analysis scheme <br>
 
 # Steps to run
-Ensure you have the *dependencies* installed and follow the steps for the problem which you want to simulate. 
+Ensure you have the [*dependencies*](#Dependencies: -) installed and follow the steps for the problem which you want to simulate. 
 
 (All shell commands are for a windows environment)
+
+- [Transport_Burgers](#Transport_Burgers C++ Code: -)
+- [Kuramoto](#Kuramoto Python Code: -)
 
 ### Dependencies: -
 1. Python (in PATH)
