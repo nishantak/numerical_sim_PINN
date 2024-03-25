@@ -25,7 +25,7 @@ git clone https://github.com/nishantak/Numerical-Sim.git
 cd Numerical-Sim
 
 ```
-## Transport_Burgers C++ Code: -
+## Transport_Burgers C++ Code
 ***FV_sim.h*** and ***FV_sim.cpp*** constitute A CUSTOM NUMERICAL ANALYSIS LIBRARY that contains _all the numerical analysis functions and scheme implementations._ **simulate.cpp** contains all simulation parameters and the flux definition (f(u)).
 
   1. Clone this git repository
@@ -39,7 +39,7 @@ cd cpp_Transport_Burgers
 g++ simulate.cpp FV_sim.cpp -o simulate && ./simulate
 ```
 
-## Kuramoto Python Code: -
+## Kuramoto Python Code
 In **each directory**, ***scheme.py*** is the module that contains _the respective numerical analysis scheme implementation._ ***functions.py*** is the module that contains functionality functions *(plot, write_data, and get_param).* **config.py** contains all simulation parameters and the flux definition (f(u)).
 
   1. Clone this git repository
