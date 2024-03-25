@@ -36,9 +36,7 @@ g++ simulate.cpp FV_sim.cpp -o simulate && ./simulate
 ```
 
 ## Kuramoto Python Code: -
-In **each directory**, ***scheme.py*** is the module that contains _the respective numerical analysis scheme implementation._ ***functions.py*** is the module that contains functionality functions *(plot, write_data, and get_param)* 
-
-**config.py** contains all simulation parameters and the flux definition (f(u)). Changes can be made there as per simulation need.
+In **each directory**, ***scheme.py*** is the module that contains _the respective numerical analysis scheme implementation._ ***functions.py*** is the module that contains functionality functions *(plot, write_data, and get_param)* **config.py** contains all simulation parameters and the flux definition (f(u)).
 
   1. Clone this git repository
 
