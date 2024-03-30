@@ -1,9 +1,9 @@
-all_data.txt
+*all_data.txt
 *.exe
-tempCodeRunnerFile.*
-uex.txt
-U_final.txt
-fw.cpp
-Transport.cpp
-.vscode/
-__pycache__
+*tempCodeRunnerFile.*
+*uex.txt
+*U_final.txt
+*fw.cpp
+*Transport.cpp
+*.vscode/
+*__pycache__
