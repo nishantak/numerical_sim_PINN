@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import os
 from .config import *
 
-
 # Plots graph
 def plot():
     # Read simulation data from output dump file
