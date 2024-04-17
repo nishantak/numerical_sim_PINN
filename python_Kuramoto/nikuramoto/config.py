@@ -45,7 +45,6 @@ Tf = 0.5  # Final time / Total Time
 x_first_cell, x_last_cell = 0, Nx-1  # j domain Limits
 y_first_cell, y_last_cell = 0, Ny-1  # k domain Limits
 
-
 K = 1 # Coupling Strength
 
 
