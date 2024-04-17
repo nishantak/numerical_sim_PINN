@@ -72,7 +72,7 @@ def simulate(u_n):
 # Calculates the TV bound
 def calculate_tv(u):
     tv_norm = 0.0
-    for k in range(y_first_cell+1, y_last_cell+1):
+    for k in range(y_first_cell, y_last_cell+1):
         for i in range(x_first_cell+1, x_last_cell+1):
             tv_norm += abs(u[k, i] - u[k, i-1])
     
