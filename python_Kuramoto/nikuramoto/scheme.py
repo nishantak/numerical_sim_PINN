@@ -10,7 +10,7 @@ from .functions import *
     j_min1 = np.roll(j, 1)   // Indices'j-1'
 '''
 
-# Returns Lax-Friedrich Numerical Flux 
+# Returns Lax-Friedrich Numerical Flux array
 def num_flux(L_U, u, y_index, dt):
     return 0.5 * (flux(L_U, u, j, y_index,) + flux(L_U, u, j_plus1, y_index)) - ((0.5 / (dt/dx)) * (u[y_index, j_plus1] - u[y_index, j]))
 
