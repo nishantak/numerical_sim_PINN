@@ -6,7 +6,7 @@ Ensure you have the [dependencies](#Dependencies) installed and follow the steps
 
 (All shell commands are for a windows environment)
 
-- [Transport_Burgers](#Transport_Burgers-C++-Code)
+- [Transport_Burgers](#Transport_Burgers-C%2B%2B-Code)
 - [Kuramoto](#Kuramoto-Python-Code)
 
 ### Dependencies: -
