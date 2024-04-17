@@ -19,7 +19,6 @@ Tf = 1.0  # Final time / Total Time
 
 first_cell, last_cell = 0, Nx-1  # j domain Limits
 
-
 K = 1 # Coupling Strength
 
 
