@@ -49,6 +49,6 @@ y_first_cell, y_last_cell = 0, Ny-1  # k domain Limits
 K = 1 # Coupling Strength
 
 
-# Returns Non-local flux (1D array), f(u) = L[Mu]Mu
+# Returns Non-local flux array, f(u) = L[Mu]Mu
 def flux(L_U, u, xindices, y_index,):
    return -K*L_U[y_index, xindices] + y0[y_index]*u[y_index, xindices]
