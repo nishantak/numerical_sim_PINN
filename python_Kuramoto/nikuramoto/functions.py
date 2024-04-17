@@ -7,10 +7,6 @@ def plot():
     # Read simulation data from output dump file
     sim_data = np.loadtxt('simulation_data.txt')
 
-    ex_data_exists = os.path.getsize("uex.txt") > 0
-    if ex_data_exists:
-        ex_data = np.loadtxt('uex.txt')
-
     # Plot
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
@@ -23,6 +19,10 @@ def plot():
     Dt = Tf / (time_steps-1)
 
     sim_data = sim_data.reshape(time_steps, Ny - y_ghost_cells, Nx - x_ghost_cells)
+
+    ex_data_exists = os.path.getsize("uex.txt") > 0
+    if ex_data_exists:
+        ex_data = np.loadtxt('uex.txt').reshape(time_steps, Ny - y_ghost_cells, Nx - x_ghost_cells)
 
     for t in range(time_steps):
         ax.clear()
