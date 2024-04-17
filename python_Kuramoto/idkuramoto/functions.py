@@ -8,10 +8,9 @@ def plot():
     # Read simulation data from output dump file
     sim_data = np.loadtxt('simulation_data.txt')
     
-    ex_data_exists = 0
+    ex_data_exists = os.path.getsize("uex.txt") > 0
     if os.path.getsize("uex.txt"):
         ex_data = np.loadtxt('uex.txt')
-        ex_data_exists = 1
 
     # Plot
     x = np.linspace(xmin, xmax, Nx-ghost_cells)
@@ -53,7 +52,7 @@ def get_param():
     print("Number of Spatial Points (Nx):", Nx - ghost_cells)
     print("Cell Width (dx):", dx, "\n")
     print("Stability Parameter (CFL Number):", cfl, "\n")
-    print("Omega, Coupling Strength:", om, ", ", K, "\n")
+    print("Coupling Strength:", K, "\n")
     print("Final Time (Tf):", Tf, "\n")
     
 

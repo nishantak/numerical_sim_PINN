@@ -24,14 +24,14 @@ def initialise(u, condition):
             
     # Polynomial Initial data
     elif condition == 2:
-        print("(6/pi^3) * (3*pi/2 - x) * (x - pi/2) , if pi/2 <= x < 3*pi/2: \n\n 0 , else")
+        print("(6/pi^3) * (3*pi/2 - x) * (x - pi/2) , if pi/2 <= x < 3*pi/2; \n\n 0 , else")
         for j in range(Nx):
             if (x[j] >= np.pi/2) and (x[j] < 3*np.pi/2):
                 u[j] = (6/np.pi**3) * (3*np.pi/2 - x[j]) * (x[j] - np.pi/2)
             else: 0
         pass
     
-    # Something 2
+    # Something 1
     elif condition == 3:
        pass 
 
@@ -68,7 +68,7 @@ def simulate(u_n):
             F_j_plus_half = num_flux(V_U, u_n, j, dt)
             F_j_min_half = num_flux(V_U, u_n, j-1, dt)
 
-            # Update using Numerical Scheme
+            # Update using Numerical Scheme (Two array method)
             u_n_plus1[j] -= (dt/dx) * (F_j_plus_half - F_j_min_half)
 
         u_n_plus1[0] = u_n_plus1[Nx-1]  # LEFT Boundary

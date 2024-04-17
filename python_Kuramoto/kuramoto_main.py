@@ -5,7 +5,7 @@
 
         2 : nikuramoto
 ''' 
-equation = 1
+equation = 2
 
 # Identical Natural Frequencies
 if(equation == 1): 
@@ -16,7 +16,7 @@ if(equation == 1):
 elif(equation == 2): 
     from nikuramoto import *
     U = np.zeros((Ny, Nx))  # U(y, x);
-
+    
 
 get_param()
 
@@ -29,19 +29,18 @@ get_param()
         1 : U_0(x_j) = 1/4 * ((x_j >= 3*pi/4) && (x_j <= 5*pi/4)) + 1/2 * ((x_j >= pi/2) && (x_j <= 3*pi/2)
         
         # Polynomial Initial data
-        2 : U_0(x_j) = (6/pi^3) * (3*pi/2 - x) * (x - pi/2) , if pi/2 <= x < 3*pi/2: 
+        2 : U_0(x_j) = (6/pi^3) * (3*pi/2 - x) * (x - pi/2) , if pi/2 <= x < 3*pi/2;
                      = 0 , else
 
         
     For NIkuramoto the Initial Conditions are as follows: -
-
-        1 : Something 
-
+        # Polynomial initial data
+        1 : U_0(x_j) = ((thet >= pi/4) && (thet < pi/2) && (om >= 0) && (om <= 1)) * (64/3*pi^2) * thet*om ;
+                     = 0 ,  else
 '''
-initialise(U, 2)
+initialise(U, 1)
 simulate(U)
 
 print("\nTotal Variation:", calculate_tv(U), "\n")
 
 plot()
-
