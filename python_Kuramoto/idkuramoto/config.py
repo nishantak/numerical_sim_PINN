@@ -4,14 +4,14 @@ import numpy as np
     Config file to set Simulation Parameters
 '''
 
-xmin, xmax = 0, 2*np.pi    # Domain limits
+xmin, xmax = 0, 2*np.pi    # THETA Domain limits | phase
 L = abs(xmax - xmin)       # Domain Length
 ghost_cells = 0            # Number of ghost cells
-Nx = 512 + ghost_cells     # Number of spatial points
+Nx = 512 + ghost_cells     # Number of phase points
 dx = L / (Nx-1)            # Cell width
 # dx = 0.01    # Cell width
-# Nx = int(L/dx) + 1 + ghost_cells  # Number of spatial points
-x = np.linspace(xmin + dx/2, xmax - dx/2, Nx)   # Spatial grid
+# Nx = int(L/dx) + 1 + ghost_cells  # Number of phase points
+x = np.linspace(xmin + dx/2, xmax - dx/2, Nx)   # Phase grid
 
 cfl = 0.35  # Stability Parameter - CFL Number
 
