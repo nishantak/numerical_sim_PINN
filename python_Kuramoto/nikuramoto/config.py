@@ -12,7 +12,7 @@ x_ghost_cells = 0           # Number of ghost cells
 Nx = 100 + x_ghost_cells    # Number of mesh points
 dx = Lx / (Nx-1)    # Cell width
 # dx = 0.01 # Cell width
-# Nx = int(L/dx) + 1    # Number of spatial points
+# Nx = int(L/dx) + 1    # Number of mesh points
 x = np.linspace(xmin + dx/2, xmax - dx/2, Nx)  # Spatial grid
 
 # OMEGA Domain
