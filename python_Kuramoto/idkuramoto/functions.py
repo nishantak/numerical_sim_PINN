@@ -51,7 +51,7 @@ def get_param():
     print("Number of Spatial Points (Nx):", Nx - ghost_cells)
     print("Cell Width (dx):", dx, "\n")
     print("Stability Parameter (CFL Number):", cfl, "\n")
-    print("Natural Frequencies, Coupling Strength:", om, " ", K, "\n")
+    print("Omega, Coupling Strength:", om, " ", K, "\n")
     print("Final Time (Tf):", Tf, "\n")
     
 
