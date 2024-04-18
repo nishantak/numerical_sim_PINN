@@ -29,7 +29,6 @@ def initialise(u, condition):
             if (x[j] >= np.pi/2) and (x[j] < 3*np.pi/2):
                 u[j] = (6/np.pi**3) * (3*np.pi/2 - x[j]) * (x[j] - np.pi/2)
             else: 0
-        pass
     
     # Something 1
     elif condition == 3:
