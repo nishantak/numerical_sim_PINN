@@ -27,9 +27,9 @@ def plot():
     for t in range(time_steps):
         ax.clear()
         ax.set_title(f'FVM Simulation after Time Step {t}, t={round(t*Dt, 3)}')
-        ax.set_xlabel('x')
-        ax.set_ylabel('y')
-        ax.set_zlabel('u(x, y)')
+        ax.set_xlabel(r'$\theta$')
+        ax.set_ylabel(r'$\Omega$')
+        ax.set_zlabel(r'$u(\theta, \Omega)$')
         # Exact solution
         if ex_data_exists:
             ax.plot_surface(X, Y, ex_data[t, :, :])
@@ -53,11 +53,11 @@ def write_data(filename, u, start_x, end_x, start_y, end_y):
 # Print Simulation Parameters
 def get_param():
     print("\nNon-Identical Kuramoto Equation\n")
-    print("X Domain Limits (xmin, xmax):", xmin, ", ", xmax)
+    print("X (Theta) Domain Limits (xmin, xmax):", xmin, ", ", xmax)
     print("X Domain Length (Lx):", Lx)
     print("Number of X Points (Nx):", Nx - x_ghost_cells)
     print("Cell Width (dx):", dx, "\n")
-    print("Y Domain Limits (ymin, ymax):", ymin, ", ", ymax)
+    print("Y (Omega) Domain Limits (ymin, ymax):", ymin, ", ", ymax)
     print("Y Domain Length (Ly):", Ly)
     print("Number of Y Points (Ny):", Ny - y_ghost_cells)
     print("Cell Height (dy):", dy, "\n")
