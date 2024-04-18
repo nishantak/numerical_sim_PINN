@@ -17,8 +17,8 @@ def plot():
     time_steps = len(sim_data)
     Dt = Tf / (time_steps-1)
 
-    plt.xlabel('x')
-    plt.ylabel('u(x)')
+    plt.xlabel(r'$\theta$')
+    plt.ylabel(r'$\mu(\theta)$')
 
     for t in range(time_steps):
         plt.clf()
