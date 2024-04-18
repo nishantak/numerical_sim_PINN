@@ -64,4 +64,3 @@ def get_param():
     print("Stability Parameter (CFL Number):", cfl, "\n")
     print("Coupling Strength (K):", K, "\n")
     print("Final Time (Tf):", Tf, "\n")
-    print(X, Y)
