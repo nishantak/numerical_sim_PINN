@@ -48,7 +48,7 @@ def simulate(u_n):
 
     # Time stepping loop
     while t < Tf:
-        # Compute convolution (integration)
+        # Compute convolution
         rho = dy * np.sum(u_n, axis=0)
         L = np.real(ifft(fft(np.sin(x0)) * fft(rho))) * dx
         L_V = np.tile(L, (Ny, 1))
@@ -68,7 +68,6 @@ def simulate(u_n):
         
         write_data(out_file, u_n, x_first_cell, x_last_cell, y_first_cell, y_last_cell)  # Write Simulation Data for THIS time step
         # write_data(debug_file, u_n, 0, Nx-1, 0, Ny-1)
-
         t += dt
 
     write_data(fin_file, u_n, x_first_cell, x_last_cell, y_first_cell, y_last_cell)  # Write Simulation Data for FINAL time step
