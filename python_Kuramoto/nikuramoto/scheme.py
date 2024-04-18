@@ -49,7 +49,7 @@ def simulate(u_n):
     # Time stepping loop
     while t < Tf:
         # Compute convolution
-        rho = dy * np.sum(u_n, axis=0)
+        rho = dy*np.sum(u_n, axis=0)
         L = np.real(ifft(fft(np.sin(x0)) * fft(rho))) * dx
         L_V = np.tile(L, (Ny, 1))
         L_U = L_V*u_n
@@ -59,7 +59,7 @@ def simulate(u_n):
         if(t+dt > Tf): dt = Tf-t
         
         # Numerical Flux
-        F= np.zeros_like(u_n)
+        F = np.zeros_like(u_n)
         for k in range(Ny):
             F[k, j] = num_flux(L_U, u_n, k, dt)
 
