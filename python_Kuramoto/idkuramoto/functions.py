@@ -8,7 +8,7 @@ def plot():
     sim_data = np.loadtxt('simulation_data.txt')
     
     ex_data_exists = os.path.getsize("uex.txt") > 0
-    if os.path.getsize("uex.txt"):
+    if ex_data_exists:
         ex_data = np.loadtxt('uex.txt')
 
     # Plot
