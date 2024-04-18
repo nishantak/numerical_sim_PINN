@@ -5,7 +5,7 @@ import numpy as np
     u_n[k,j] -> k = y_index, j = x_index
 '''
 
-# X Domain
+# THETA Domain
 xmin, xmax = 0, 2*np.pi     # Domain limits
 Lx = abs(xmax - xmin)       # Domain Length
 x_ghost_cells = 0           # Number of ghost cells
@@ -15,7 +15,7 @@ dx = Lx / (Nx-1)    # Cell width
 # Nx = int(L/dx) + 1    # Number of spatial points
 x = np.linspace(xmin + dx/2, xmax - dx/2, Nx)  # Spatial grid
 
-# Y Domain
+# OMEGA Domain
 ymin, ymax = 0, 1
 Ly = abs(xmax - xmin)
 y_ghost_cells = 0
