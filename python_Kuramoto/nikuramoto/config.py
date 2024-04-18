@@ -5,17 +5,17 @@ import numpy as np
     u_n[k,j] -> k = y_index, j = x_index
 '''
 
-# THETA Domain
+# THETA Domain | Phase
 xmin, xmax = 0, 2*np.pi     # Domain limits
 Lx = abs(xmax - xmin)       # Domain Length
 x_ghost_cells = 0           # Number of ghost cells
-Nx = 100 + x_ghost_cells    # Number of mesh points
+Nx = 100 + x_ghost_cells    # Number of phase points
 dx = Lx / (Nx-1)    # Cell width
 # dx = 0.01 # Cell width
-# Nx = int(L/dx) + 1    # Number of mesh points
-x = np.linspace(xmin + dx/2, xmax - dx/2, Nx)  # Spatial grid
+# Nx = int(L/dx) + 1    # Number of phase points
+x = np.linspace(xmin + dx/2, xmax - dx/2, Nx)  # Phase grid
 
-# OMEGA Domain
+# OMEGA Domain | Natural Frequency
 ymin, ymax = 0, 1
 Ly = abs(xmax - xmin)
 y_ghost_cells = 0
