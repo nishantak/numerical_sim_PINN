@@ -7,3 +7,5 @@
 *Transport.cpp
 *.vscode/
 *__pycache__
+*python_Kuramoto/*/steps
+*.png

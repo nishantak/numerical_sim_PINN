@@ -11,7 +11,7 @@ int equation; // Problem Statement
 double xmin = -2*M_PI, xmax = 2*M_PI ;  // Domain limits
 double L = abs(xmax- xmin);   //Domain Length
 int ghost_cells = 0;    // Number of ghost cells 
-int Nx = 200 + ghost_cells;   // Number of spatial points
+int Nx = 512 + ghost_cells;   // Number of spatial points
 long double dx = L/(Nx-1);  // Cell width 
 // long double dx = 0.2; // Cell Width
 // int Nx = (int)(L/dx) + 1 + ghost_cells; // Number of Spatial Points
@@ -66,7 +66,7 @@ int main(){
 
             2 : Discrete initial data, U_0(x_j) = (x_i > 0) ? 0 : 1
 
-            3 : U_0(x_j) = 0.25 * ( sech(sqrt(0.5)/2 * x -7) )^2  |  KdV stuff (nvm)
+            # 3 : U_0(x_j) = 0.25 * ( sech(sqrt(0.5)/2 * x -7) )^2  |  KdV stuff (nvm)
 
 
         Similarly, simulate() function takes 3 inputs, the vector U, an integer denoting the flux scheme,

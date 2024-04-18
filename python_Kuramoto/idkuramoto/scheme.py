@@ -16,9 +16,9 @@ def initialise(u, condition):
 
     print("Initial Condition: U_0(x_j) = ")
 
-    # Piece-wise Constant Initial data
+    # Singular Initial data
     if condition == 1:
-        print("1/4 * ((x_j >= 3*pi/4) && (x_j <= 5*pi/4)) + 1/2 * ((x_j >= pi/2) && (x_j <= 3*pi/2);\n\n 0 , else")
+        print("1/4 * ((x_j >= 3*pi/4) && (x_j <= 5*pi/4)) + 1/2 * ((x_j >= pi/2) && (x_j <= 3*pi/2);\n\n 1/(3*pi)")
         for j in range(Nx):
             u[j] = 0.25*((x[j]>=3*np.pi/4.0) & (x[j]<=5*np.pi/4.0)) + 0.5*((x[j]>=np.pi/2.0) & (x[j]<=3*np.pi/2.0))
             

@@ -27,17 +27,22 @@ def plot():
     for t in range(time_steps):
         ax.clear()
         ax.set_title(f'FVM Simulation after Time Step {t}, t={round(t*Dt, 3)}')
+        # ax.set_title('FVM Sim, LF num-flux; NIKuramoto Equation, Polynomial Initial Data')
+
         ax.set_xlabel(r'$\theta$')
         ax.set_ylabel(r'$\Omega$')
         ax.set_zlabel(r'$u(\theta, \Omega)$')
+
         # Exact solution
         if ex_data_exists:
             ax.plot_surface(X, Y, ex_data[t, :, :])
         # Numerical solution
         ax.plot_surface(X, Y, sim_data[t, :, :])
-
+        
+        ax.view_init(elev=20, azim=-134)
+        # plt.savefig(f'{t}.png', bbox_inches='tight')
         plt.draw()
-        plt.pause(0.08)
+        plt.pause(0.0001)
 
     plt.show()
 

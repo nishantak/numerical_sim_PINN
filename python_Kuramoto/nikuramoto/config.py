@@ -9,7 +9,7 @@ import numpy as np
 xmin, xmax = 0, 2*np.pi     # Domain limits
 Lx = abs(xmax - xmin)       # Domain Length
 x_ghost_cells = 0           # Number of ghost cells
-Nx = 100 + x_ghost_cells    # Number of phase points
+Nx = 256 + x_ghost_cells    # Number of phase points
 dx = Lx / (Nx-1)    # Cell width
 # dx = 0.01 # Cell width
 # Nx = int(L/dx) + 1    # Number of phase points
@@ -19,7 +19,7 @@ x = np.linspace(xmin + dx/2, xmax - dx/2, Nx)  # Phase grid
 ymin, ymax = 0, 1
 Ly = abs(xmax - xmin)
 y_ghost_cells = 0
-Ny = 100 + y_ghost_cells
+Ny = 256 + y_ghost_cells
 dy = Ly / (Ny-1)
 # dy = 0.01
 # Nx = int(Ly/dy) + 1

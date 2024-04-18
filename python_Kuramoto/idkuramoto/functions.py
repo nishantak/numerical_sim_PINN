@@ -23,14 +23,15 @@ def plot():
     for t in range(time_steps):
         plt.clf()
         plt.title(f'FVM Simulation after Time Step {t}, t={round(t*Dt, 3)}')
+        # plt.title('FVM Sim, LF num-flux; IDKuramoto Equation, Polynomial Initial Data')
 
         # Exact Solution
         if ex_data_exists:
             plt.plot(x, ex_data, linestyle=":", marker="o", markersize=1, markerfacecolor='none', label='Exact Solution') 
-        
         # Numerical Solution
         plt.plot(x, sim_data[t, :], linestyle=":", marker="o", markersize=1, markerfacecolor='none', label='Numerical Solution') 
         
+        # plt.savefig(idkuramoto/steps/f'{t}.png', bbox_inches='tight')
         plt.legend()
         plt.draw()
         plt.pause(0.08)
