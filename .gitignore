@@ -8,4 +8,5 @@
 *.vscode/
 *__pycache__
 *python_Kuramoto/*/steps
+*PINN_Kuramoto/*/steps
 *.png
