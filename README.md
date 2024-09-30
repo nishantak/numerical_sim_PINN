@@ -8,12 +8,13 @@
 
 
 ### Dependencies: -
-1. Python (in PATH)
-2. C++ (in PATH)
+1. Python
+2. C++
 2. matplotlib
 3. NumPy
-4. SciPy (for kuramoto)
+4. SciP
 5. PyTorch and related libraries
+6. Jupyter 
 
 (All shell commands are for a windows environment)
 
