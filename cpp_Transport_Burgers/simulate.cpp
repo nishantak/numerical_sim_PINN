@@ -87,7 +87,7 @@ int main(){
                             u_n_plus1[0] = u_n_plus1[Nx-1]; 
     */ 
     
-    equation = 1; 
+    equation = 2; 
 
     a = 1;  // Constant Flux Multiplier
 
