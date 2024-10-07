@@ -5,7 +5,7 @@
 
         2 : nikuramoto
 ''' 
-equation = 2
+equation = 1
 
 # Identical Natural Frequencies
 if(equation == 1): 
@@ -38,7 +38,7 @@ get_param()
         1 : U_0(x_j) = ((thet >= pi/4) && (thet < pi/2) && (om >= 0) && (om <= 1)) * (64/3*pi^2) * thet*om ;
                      = 0 ,  else
 '''
-initialise(U, 1)
+initialise(U, 2)
 simulate(U)
 
 print("\nTotal Variation:", calculate_tv(U), "\n")
