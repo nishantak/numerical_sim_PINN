@@ -10,3 +10,4 @@
 *python_Kuramoto/*/steps
 *PINN_Kuramoto/*/steps
 *.png
+*u_burgers.txt
