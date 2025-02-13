@@ -20,8 +20,8 @@
 (All shell commands are for a windows environment)
 
 ```bash
-git clone https://github.com/nishantak/Numerical-Sim.git
-cd Numerical-Sim
+git clone https://github.com/nishantak/numerical_sim_PINN.git
+cd numerical_sim_PINN
 pip install -r requirements.txt
 ```
 
