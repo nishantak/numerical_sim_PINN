@@ -38,7 +38,7 @@ get_param()
         1 : U_0(x_j) = ((thet >= pi/4) && (thet < pi/2) && (om >= 0) && (om <= 1)) * (64/3*pi^2) * thet*om ;
                      = 0 ,  else
 '''
-initialise(U, 2)
+initialise(U, 1)
 simulate(U)
 
 print("\nTotal Variation:", calculate_tv(U), "\n")
