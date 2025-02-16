@@ -26,11 +26,15 @@ get_param()
     For IDkuramoto the Initial Conditions are as follows: -
         
         # Singular Initial data
-        1 : U_0(x_j) = 1/4 * ((x_j >= 3*pi/4) && (x_j <= 5*pi/4)) + 1/2 * ((x_j >= pi/2) && (x_j <= 3*pi/2)
+        1 : U_0(x_j) = 1/4 * ((x_j == 3*pi/4) | (x_j == 5*pi/4)) + 1/2 * ((x_j >= pi/2) && (x_j <= 3*pi/2)
         
         # Polynomial Initial data
-        2 : U_0(x_j) = (6/pi^3) * (3*pi/2 - x) * (x - pi/2) , if pi/2 <= x < 3*pi/2;
+        2 : U_0(x_j) = (6/pi^3) * (3*pi/2 - x) * (x - pi/2) , if pi/2 <= x <= 3*pi/2;
                      = 0 , else
+        
+        # Piecewise Initial data
+        2 : U_0(x) = 2/(3pi) if  pi/2 <= x <= 3pi/2;
+                   = 1/(3pi), else
 
         
     For NIkuramoto the Initial Conditions are as follows: -
@@ -38,7 +42,7 @@ get_param()
         1 : U_0(x_j) = ((thet >= pi/4) && (thet < pi/2) && (om >= 0) && (om <= 1)) * (64/3*pi^2) * thet*om ;
                      = 0 ,  else
 '''
-initialise(U, 2)
+initialise(U, 3)
 simulate(U)
 
 print("\nTotal Variation:", calculate_tv(U), "\n")

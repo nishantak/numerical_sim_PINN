@@ -18,9 +18,10 @@ def initialise(u, condition):
 
     # Singular Initial data
     if condition == 1:
-        print("1/4 * ((x_j >= 3*pi/4) && (x_j <= 5*pi/4)) + 1/2 * ((x_j >= pi/2) && (x_j <= 3*pi/2);\n\n 1/(3*pi)")
+        print("1/4 * ((x_j == 3*pi/4) | (x_j == 5*pi/4)) + 1/2 * ((x_j >= pi/2) && (x_j <= 3*pi/2)")
         for j in range(Nx):
-            u[j] = 0.25*((x[j]>=3*np.pi/4.0) & (x[j]<=5*np.pi/4.0)) + 0.5*((x[j]>=np.pi/2.0) & (x[j]<=3*np.pi/2.0))
+            u[j] = 0.25*((x[j]==3*np.pi/4.0) | (x[j]==5*np.pi/4.0)) + 0.5*((x[j]>=np.pi/2.0) & (x[j]<=3*np.pi/2.0))
+        
             
     # Polynomial Initial data
     elif condition == 2:
@@ -29,6 +30,13 @@ def initialise(u, condition):
             if (x[j] >= np.pi/2) and (x[j] < 3*np.pi/2):
                 u[j] = (6/np.pi**3) * (3*np.pi/2 - x[j]) * (x[j] - np.pi/2)
             else: 0
+    
+    # Piecewise Initial Data
+    elif condition == 3:
+        print("2/(3pi) if pi/2 <= x <= 3pi/2; 1/(3pi), else\n")
+        mask = (x >= (np.pi/2)) & (x <= (3*np.pi/2))
+        u[mask]  = 2.0 / (3.0*np.pi)
+        u[~mask] = 1.0 / (3.0*np.pi)
     
     # Something 1
     elif condition == 3:
