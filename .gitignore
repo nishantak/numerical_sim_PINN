@@ -7,8 +7,8 @@
 *Transport.cpp
 *.vscode/
 *__pycache__
-*python_Kuramoto/*/steps
-*PINN_Kuramoto/*/steps
+*python_Kuramoto/*/steps*
+*PINN_Kuramoto/*steps*
 *.png
 *u_burgers.txt
 *.pt
