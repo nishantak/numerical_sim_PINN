@@ -1,7 +1,7 @@
 # Numerical Simulation: PINN Approach
 - Explicit Finite Volume Numerical Analysis Scheme <br> 
 
-<img></img> <img src="sim_gifs/td.gif" alt="trspt_disc" width="23%"></img> <img src="sim_gifs/bs.gif" alt="burg_sin" width="23.5%"></img> <img src="sim_gifs/idp.gif" alt="id_pol" width="24%"></img> <img src="sim_gifs/nip.gif" alt="ni_pol" width="25.5%">
+<img src="sim_gifs/td.gif" alt="trspt_disc" width="23%"></img> <img src="sim_gifs/bs.gif" alt="burg_sin" width="23.5%"></img> <img src="sim_gifs/idp.gif" alt="id_pol" width="24%"></img> <img src="sim_gifs/nip.gif" alt="ni_pol" width="25.5%">
 
 - Physics-Informed Neural Network <br>
 
@@ -20,8 +20,8 @@
 (All shell commands are for a windows environment)
 
 ```bash
-git clone https://github.com/nishantak/Numerical-Sim.git
-cd Numerical-Sim
+git clone https://github.com/nishantak/numerical_sim_PINN.git
+cd numerical_sim_PINN
 pip install -r requirements.txt
 ```
 
