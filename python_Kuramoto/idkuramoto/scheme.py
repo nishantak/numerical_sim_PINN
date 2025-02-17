@@ -18,11 +18,17 @@ def initialise(u, condition):
 
     # Singular Initial data
     if condition == 1:
-        print("1/4 * ((x_j == 3*pi/4) | (x_j == 5*pi/4)) + 1/2 * ((x_j >= pi/2) && (x_j <= 3*pi/2)")
-        for j in range(Nx):
-            u[j] = 0.25*((x[j]==3*np.pi/4.0) | (x[j]==5*np.pi/4.0)) + 0.5*((x[j]>=np.pi/2.0) & (x[j]<=3*np.pi/2.0))
-        
-            
+        print("1/4 * (delta_3pi/4 + delta_5pi/4) + 1/2 * X_[pi/2, 3pi/2] ")
+        def dirac_delta(x, a, epsilon=0.01):
+            return np.where(np.abs(x-a) < epsilon, 1/(2*epsilon), 0)
+
+        def heaviside(x):
+            return np.where(x>=0, 1, 0)
+
+        u[:] = ( 1/4 * (dirac_delta(x, 3*np.pi/4) + dirac_delta(x, 5*np.pi/4)) +
+                1/2 * heaviside(x - np.pi/2) * (1 - heaviside(x - 3*np.pi/2)) )
+
+
     # Polynomial Initial data
     elif condition == 2:
         print("(6/pi^3) * (3*pi/2 - x) * (x - pi/2) , if pi/2 <= x < 3*pi/2; \n\n 0 , else")
@@ -31,16 +37,14 @@ def initialise(u, condition):
                 u[j] = (6/np.pi**3) * (3*np.pi/2 - x[j]) * (x[j] - np.pi/2)
             else: 0
     
+
     # Piecewise Initial Data
     elif condition == 3:
         print("2/(3pi) if pi/2 <= x <= 3pi/2; 1/(3pi), else\n")
         mask = (x >= (np.pi/2)) & (x <= (3*np.pi/2))
         u[mask]  = 2.0 / (3.0*np.pi)
         u[~mask] = 1.0 / (3.0*np.pi)
-    
-    # Something 1
-    elif condition == 3:
-       pass 
+
 
     u_ex(condition) # Compute exact solution based on initial condition and problem statement
 
