@@ -12,5 +12,4 @@
 *.png
 *u_burgers.txt
 *.pt
-*experimental_results*
-*experiments_216*
+*experiment_results*
