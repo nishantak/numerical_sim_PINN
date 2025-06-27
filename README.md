@@ -52,3 +52,25 @@ Trains a Physics Informed Neural Network with: -
 - tanh activation
 
 Predicts u(x). Check experiments and implementation in the [Notebook](/PINN_Kuramoto/pinn_solver.ipynb)
+
+---
+
+## Numerical Simulation 
+
+> The core concept of a Numerical *Simulation* is to *Simulate* a differential equation.
+
+Differential equation, in it's essence, describes "change", or in more physics terms- "evolution".
+ 
+So, the differential equation describes- "How a physical quantity evolves or changes with respect to other physical quantities, such as time or space."
+
+Now, one easy way to find the value of this change would be to have the solution to the equation, right?. Just have the solution -> plug in the value of the parameters -> and get the value of the change for those parameters. 
+
+A solution would mean something like a formula such as "x = something"; where x is the change.
+
+But, in real life we do not have such known solutions for every differential equation!
+
+Hence, what do we do? We find the value of change from the differential equation itself. We calculate the equation via the computer (because doing so manually would be too tedious). And for small changes in the parameters, such as dx or dt, we plug in those values in our *"scheme"* and get the value of the change.
+
+"Scheme" means how we are simulating the differential equation. We have implemented a Finite Volume Scheme, which is a type of scheme used for Numerical Analysis.
+
+The graphs you may see in the README are representing the value of change, how the change evolves, how the physical quantity evolves w.r.t. the parameters which may be time or space.
